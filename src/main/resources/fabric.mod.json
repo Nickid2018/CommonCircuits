@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    {
+      "name": "${author}",
+      "contact": {
+        "homepage": "https://github.com/${author}"
+      }
+    }
+  ],
+  "contact": {
+    "homepage": "{mod_homepage}",
+    "issues": "https://github.com/${author}/${mod_simple_name}/issues",
+    "sources": "https://github.com/${author}/${mod_simple_name}"
+  },
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.nickid2018.commoncircuits.CommonCircuitsMain"
+    ]
+  },
+  "depends": {
+    "minecraft": "${minecraft_dependency}"
+  },
+  "custom": {
+    "modmenu:parent": "${mod_id}",
+    "modmenu": {
+      "parent": "${mod_id}"
+    }
+  }
+}

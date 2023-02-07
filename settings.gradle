@@ -1,0 +1,44 @@
+pluginManagement {
+    repositories {
+        maven {
+            name("Fabric")
+            url("https://maven.fabricmc.net")
+        }
+        maven {
+            name("Jitpack")
+            url("https://jitpack.io")
+        }
+        maven {
+            name("Cotton")
+            url("https://server.bbkr.space/artifactory/libs-release")
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            switch (requested.id.id) {
+                case "com.replaymod.preprocess": {
+                    useModule("com.github.Fallen-Breath:preprocessor:${requested.version}")
+                }
+            }
+        }
+    }
+}
+
+rootProject.name = 'CommonCircuits'
+
+// Define subprojects for versions
+def supportVersions = [
+        "1.16.5",
+        "1.17.1",
+        "1.18.2",
+        "1.19.3"
+]
+
+for (String version : supportVersions) {
+    include(":${version}")
+    def subProject = project(":${version}")
+    subProject.projectDir = file("versions/${version}")
+    subProject.buildFileName = "../../common.gradle"
+}

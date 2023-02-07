@@ -1,0 +1,120 @@
+import java.util.stream.Collectors
+import java.util.stream.Stream
+
+// For all versions, the build scripts are similar
+apply(plugin: "fabric-loom")
+apply(plugin: "com.replaymod.preprocess")
+
+preprocess {
+    tabIndentation = false
+}
+
+// Repositories
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+// Dependencies
+dependencies {
+    // Development environment
+    minecraft("com.mojang:minecraft:${project.minecraft_version}")
+    mappings(loom.officialMojangMappings())
+
+    // Annotation processor
+    modApi("org.projectlombok:lombok:${project.lombok_version}")
+    annotationProcessor("org.projectlombok:lombok:${project.lombok_version}")
+
+    // Fabric loader
+    modImplementation("net.fabricmc:fabric-loader:0.14.14")
+
+    // Mod dependencies
+}
+
+loom {
+    runConfigs.all {
+        // Dump modified classes automatically.
+        property("mixin.debug.export", "true")
+    }
+
+    // Client basic configuration
+    runConfigs.client {
+        programArgs([
+                "--width", "854",
+                "--height", "480"
+        ])
+        runDir("run/client")
+    }
+
+    // Server basic configuration
+    runConfigs.server {
+        runDir("run/server")
+    }
+
+    runClient {
+        defaultCharacterEncoding("UTF-8")
+        // Create options.txt automatically if it does not exist.
+        if (!file("${projectDir}/run/client/options.txt").exists()) {
+            // https://minecraft.fandom.com/zh/wiki/Options.txt
+            file("${projectDir}/run/client").mkdirs()
+            PrintWriter writer = new PrintWriter("${projectDir}/run/client/options.txt", "UTF-8")
+            writer.println("gamma:16.0") // Unsupported >1 in 1.18
+            writer.println("guiScale:4")
+            writer.println("lang:${Locale.getDefault().toString()}")
+            writer.println("showSubtitles:true")
+            writer.println("directionalAudio:true")
+            writer.println("screenEffectScale:0.0")
+            writer.println("entityDistanceScaling:5.0")
+            writer.println("skipMultiplayerWarning:true")
+            writer.close()
+        }
+    }.dependsOn(processResources)
+
+    runServer {
+        defaultCharacterEncoding("UTF-8")
+        // eula.txt
+        if (!file("${projectDir}/run/server/eula.txt").exists()) {
+            file("${projectDir}/run/server").mkdirs()
+            PrintWriter writer = new PrintWriter("${projectDir}/run/server/eula.txt", "UTF-8")
+            writer.println("eula=true")
+            writer.close()
+        }
+    }.dependsOn(processResources)
+}
+
+// Project settings -----------------------------------------------------------
+setArchivesBaseName("${project.mod_simple_name}-${project.minecraft_version}")
+setVersion(project.parent.mod_version)
+setGroup(project.maven_group)
+
+if (mcVersion >= 11800) {
+    setSourceCompatibility(JavaVersion.VERSION_17)
+    setTargetCompatibility(JavaVersion.VERSION_17)
+} else if (mcVersion >= 11700) {
+    setSourceCompatibility(JavaVersion.VERSION_16)
+    setTargetCompatibility(JavaVersion.VERSION_16)
+} else {
+    setSourceCompatibility(JavaVersion.VERSION_1_8)
+    setTargetCompatibility(JavaVersion.VERSION_1_8)
+}
+
+// Construct mod metadata
+processResources {
+    outputs.upToDateWhen { false }
+
+    inputs.property("version", version)
+    filesMatching("fabric.mod.json") {
+        expand([
+                "author"              : project.author,
+                "mod_version"         : project.mod_version,
+                "mod_id"              : project.mod_id,
+                "mod_name"            : project.mod_name,
+                "mod_simple_name"     : project.mod_simple_name,
+                "mod_homepage"        : project.mod_homepage,
+                "mod_license"         : project.mod_license,
+                "mod_description"     : project.mod_description,
+                "minecraft_dependency": project.minecraft_dependency,
+                "minecraft_version"   : project.minecraft_version
+        ])
+    }
+}
