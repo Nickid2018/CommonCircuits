@@ -24,8 +24,12 @@
       "io.github.nickid2018.commoncircuits.CommonCircuitsMain"
     ]
   },
+  "mixins": [
+    "commoncircuits.mixins.json"
+  ],
   "depends": {
-    "minecraft": "${minecraft_dependency}"
+    "minecraft": "${minecraft_dependency}",
+    "fabric-api": "*"
   },
   "custom": {
     "modmenu:parent": "${mod_id}",

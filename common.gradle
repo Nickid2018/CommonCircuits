@@ -29,6 +29,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.14.14")
 
     // Mod dependencies
+    // fabric-api
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_api_dependency}")
 }
 
 loom {
@@ -117,4 +119,8 @@ processResources {
                 "minecraft_version"   : project.minecraft_version
         ])
     }
+}
+
+jar {
+    from("../../LICENSE")
 }
