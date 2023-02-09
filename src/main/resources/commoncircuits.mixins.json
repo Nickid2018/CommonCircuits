@@ -4,5 +4,7 @@
   "mixins": [
     "RedStoneWireBlockAccessor",
     "RedStoneWireBlockMixin"
+  ],
+  "client": [
   ]
 }

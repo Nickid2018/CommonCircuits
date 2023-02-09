@@ -1,12 +1,12 @@
-import java.util.stream.Collectors
-import java.util.stream.Stream
-
 // For all versions, the build scripts are similar
 apply(plugin: "fabric-loom")
 apply(plugin: "com.replaymod.preprocess")
 
+int mcVersion = 0
+
 preprocess {
     tabIndentation = false
+    mcVersion = vars.get()["MC"]
 }
 
 // Repositories
@@ -22,7 +22,7 @@ dependencies {
     mappings(loom.officialMojangMappings())
 
     // Annotation processor
-    modApi("org.projectlombok:lombok:${project.lombok_version}")
+    modCompileOnly("org.projectlombok:lombok:${project.lombok_version}")
     annotationProcessor("org.projectlombok:lombok:${project.lombok_version}")
 
     // Fabric loader
@@ -68,9 +68,10 @@ loom {
             writer.println("screenEffectScale:0.0")
             writer.println("entityDistanceScaling:5.0")
             writer.println("skipMultiplayerWarning:true")
+            writer.println("advancedItemTooltips:true")
             writer.close()
         }
-    }.dependsOn(processResources)
+    }
 
     runServer {
         defaultCharacterEncoding("UTF-8")
@@ -81,7 +82,7 @@ loom {
             writer.println("eula=true")
             writer.close()
         }
-    }.dependsOn(processResources)
+    }
 }
 
 // Project settings -----------------------------------------------------------
@@ -104,6 +105,8 @@ if (mcVersion >= 11800) {
 processResources {
     outputs.upToDateWhen { false }
 
+    def fabricApiName = mcVersion >= 11903 ? "fabric-api" : "fabric"
+
     inputs.property("version", version)
     filesMatching("fabric.mod.json") {
         expand([
@@ -116,9 +119,18 @@ processResources {
                 "mod_license"         : project.mod_license,
                 "mod_description"     : project.mod_description,
                 "minecraft_dependency": project.minecraft_dependency,
-                "minecraft_version"   : project.minecraft_version
+                "minecraft_version"   : project.minecraft_version,
+                "fabric_api_name"     : fabricApiName
         ])
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
 }
 
 jar {

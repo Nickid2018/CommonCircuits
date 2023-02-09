@@ -2,9 +2,11 @@ package io.github.nickid2018.commoncircuits.block;
 
 //#if MC>=11903
 import net.minecraft.util.RandomSource;
+import org.joml.Vector3f;
 //#else
 //$$ import java.util.Random;
 //$$ import com.mojang.math.Vector3f;
+//$$ import net.minecraft.world.phys.Vec3;
 //#endif
 
 import com.google.common.collect.Sets;
@@ -27,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.RedstoneSide;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -45,9 +46,13 @@ public abstract class StrongRedStoneWireBlock extends Block {
     private final int maxPower;
     private final BlockState crossState;
     private final Map<BlockState, VoxelShape> shapeCache = new HashMap<>();
-    private final Vec3[] COLORS;
+    //#if MC>=11903
+    private final Vector3f[] COLORS;
+    //#else
+    //$$ private final Vec3[] COLORS;
+    //#endif
 
-    public StrongRedStoneWireBlock(Properties properties, int maxPower, IntegerProperty powerProperty) {
+    public StrongRedStoneWireBlock(Properties properties, int maxPower, IntegerProperty powerProperty, float baseG, float baseB) {
         super(properties);
         this.powerProperty = powerProperty;
         this.maxPower = maxPower;
@@ -67,15 +72,31 @@ public abstract class StrongRedStoneWireBlock extends Block {
                 continue;
             shapeCache.put(blockState, ((RedStoneWireBlockAccessor) Blocks.REDSTONE_WIRE).calculateRedstoneShape(blockState));
         }
-        COLORS = Util.make(new Vec3[maxPower + 1], vec3s -> {
+        //#if MC>=11903
+        COLORS = Util.make(new Vector3f[maxPower + 1], vec3s -> {
             for (int i = 0; i <= maxPower; ++i) {
                 float f = (float) i / maxPower;
                 float g = f * 0.6f + (f > 0.0f ? 0.4f : 0.3f);
-                float h = Mth.clamp(f * f * 0.7f - 0.5f, 0.0f, 1.0f);
-                float j = Mth.clamp(f * f * 0.6f - 0.7f, 0.0f, 1.0f);
-                vec3s[i] = new Vec3(g, h, j);
+                float h = Mth.clamp(f * f * 0.7f - 0.5f, baseG, baseB);
+                float j = Mth.clamp(f * f * 0.6f - 0.7f, baseG, baseB);
+                vec3s[i] = new Vector3f(g, h, j);
             }
         });
+        //#else
+        //$$ COLORS = Util.make(new Vec3[maxPower + 1], vec3s -> {
+        //$$    for (int i = 0; i <= maxPower; ++i) {
+        //$$        float f = (float) i / maxPower;
+        //$$        float g = f * 0.6f + (f > 0.0f ? 0.4f : 0.3f);
+        //$$        float h = Mth.clamp(f * f * 0.7f - 0.5f, baseG, baseB);
+        //$$        float j = Mth.clamp(f * f * 0.6f - 0.7f, baseG, baseB);
+        //$$        vec3s[i] = new Vec3(g, h, j);
+        //$$    }
+        //$$ });
+        //#endif
+    }
+
+    public IntegerProperty getPowerProperty() {
+        return powerProperty;
     }
 
     public static int powerConvert(int now, int sourceRange, int targetRange) {
@@ -88,7 +109,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
             return (now - 1) / extend + 1;
         } else {
             int extend = targetRange / sourceRange;
-            return (now - 1) * extend + 1;
+            return now * extend;
         }
     }
 
@@ -140,8 +161,9 @@ public abstract class StrongRedStoneWireBlock extends Block {
     private BlockState getMissingConnections(BlockGetter blockGetter, BlockState blockState, BlockPos blockPos) {
         boolean bl = !blockGetter.getBlockState(blockPos.above()).isRedstoneConductor(blockGetter, blockPos);
         for (Direction direction : Direction.Plane.HORIZONTAL) {
-            if (blockState.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected()) continue;
-            RedstoneSide redstoneSide = this.getConnectingSide(blockGetter, blockPos, direction, bl);
+            if (blockState.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected())
+                continue;
+            RedstoneSide redstoneSide = getConnectingSide(blockGetter, blockPos, direction, bl);
             blockState = blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), redstoneSide);
         }
         return blockState;
@@ -173,30 +195,30 @@ public abstract class StrongRedStoneWireBlock extends Block {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             RedstoneSide redstoneSide = blockState.getValue(PROPERTY_BY_DIRECTION.get(direction));
             BlockState offsetState = levelAccessor.getBlockState(mutableBlockPos.setWithOffset(blockPos, direction));
-            if (redstoneSide == RedstoneSide.NONE || offsetState.is(this) || offsetState.getBlock() instanceof StrongRedStoneWireBlock)
-                continue;
-            mutableBlockPos.move(Direction.DOWN);
-            BlockState blockState2 = levelAccessor.getBlockState(mutableBlockPos);
-            if (blockState2.is(Blocks.REDSTONE_WIRE) || blockState2.getBlock() instanceof StrongRedStoneWireBlock) {
-                BlockPos blockPos2 = mutableBlockPos.relative(direction.getOpposite());
-                //#if MC>=11903
-                levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), mutableBlockPos, blockPos2, i, j);
-                //#else
-                //$$ BlockState blockState3 = blockState2.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), levelAccessor, mutableBlockPos, blockPos2);
-                //$$ updateOrDestroy(blockState2, blockState3, levelAccessor, mutableBlockPos, i, j);
-                //#endif
+            if (redstoneSide != RedstoneSide.NONE && !(offsetState.is(Blocks.REDSTONE_WIRE) || offsetState.getBlock() instanceof StrongRedStoneWireBlock)) {
+                mutableBlockPos.move(Direction.DOWN);
+                BlockState blockState2 = levelAccessor.getBlockState(mutableBlockPos);
+                if (blockState2.is(Blocks.REDSTONE_WIRE) || blockState2.getBlock() instanceof StrongRedStoneWireBlock) {
+                    BlockPos blockPos2 = mutableBlockPos.relative(direction.getOpposite());
+                    //#if MC>=11903
+                    levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), mutableBlockPos, blockPos2, i, j);
+                    //#else
+                    //$$ BlockState blockState3 = blockState2.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), levelAccessor, mutableBlockPos, blockPos2);
+                    //$$ updateOrDestroy(blockState2, blockState3, levelAccessor, mutableBlockPos, i, j);
+                    //#endif
+                }
+                mutableBlockPos.setWithOffset(blockPos, direction).move(Direction.UP);
+                BlockState blockState3 = levelAccessor.getBlockState(mutableBlockPos);
+                if (blockState3.is(Blocks.REDSTONE_WIRE) || blockState3.getBlock() instanceof StrongRedStoneWireBlock) {
+                    BlockPos blockPos3 = mutableBlockPos.relative(direction.getOpposite());
+                    //#if MC>=11903
+                    levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), mutableBlockPos, blockPos3, i, j);
+                    //#else
+                    //$$ BlockState blockState5 = blockState3.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), levelAccessor, mutableBlockPos, blockPos3);
+                    //$$ updateOrDestroy(blockState3, blockState5, levelAccessor, mutableBlockPos, i, j);
+                    //#endif
+                }
             }
-            mutableBlockPos.setWithOffset(blockPos, direction).move(Direction.UP);
-            BlockState blockState3 = levelAccessor.getBlockState(mutableBlockPos);
-            if (!blockState3.is(Blocks.REDSTONE_WIRE) && !(blockState2.getBlock() instanceof StrongRedStoneWireBlock))
-                continue;
-            BlockPos blockPos3 = mutableBlockPos.relative(direction.getOpposite());
-            //#if MC>=11903
-            levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), mutableBlockPos, blockPos3, i, j);
-            //#else
-            //$$ BlockState blockState5 = blockState3.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), levelAccessor, mutableBlockPos, blockPos3);
-            //$$ updateOrDestroy(blockState3, blockState5, levelAccessor, mutableBlockPos, i, j);
-            //#endif
         }
     }
 
@@ -247,7 +269,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
         for (Direction direction : Direction.values()) {
             BlockPos pos = blockPos.relative(direction);
             int nowSignal;
-            BlockState blockState = level.getBlockState(blockPos);
+            BlockState blockState = level.getBlockState(pos);
             if (blockState.getBlock() instanceof StrongRedStoneWireBlock) {
                 StrongRedStoneWireBlock wire = (StrongRedStoneWireBlock) blockState.getBlock();
                 nowSignal = powerConvert(wire.getNoConvertSignal(blockState, level, pos, direction), wire.maxPower, maxPower);
@@ -398,7 +420,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
     }
 
     //#if MC>=11903
-    private void spawnParticlesAlongLine(Level level, RandomSource random, BlockPos blockPos, Vec3 vec3, Direction direction, Direction direction2, float f, float g) {
+    private void spawnParticlesAlongLine(Level level, RandomSource random, BlockPos blockPos, Vector3f vec3, Direction direction, Direction direction2, float f, float g) {
     //#else
     //$$ private void spawnParticlesAlongLine(Level level, Random random, BlockPos blockPos, Vec3 vec3, Direction direction, Direction direction2, float f, float g) {
     //#endif
@@ -410,7 +432,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
         double e = 0.5 + 0.4375f * direction.getStepY() + j * direction2.getStepY();
         double k = 0.5 + 0.4375f * direction.getStepZ() + j * direction2.getStepZ();
         //#if MC>=11903
-        level.addParticle(new DustParticleOptions(vec3.toVector3f(), 1.0f), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
+        level.addParticle(new DustParticleOptions(vec3, 1.0f), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
         //#elseif MC>=11701
         //$$ level.addParticle(new DustParticleOptions(new Vector3f(vec3), 1.0F), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
         //#else
@@ -491,9 +513,18 @@ public abstract class StrongRedStoneWireBlock extends Block {
     private void updatesOnShapeChange(Level level, BlockPos blockPos, BlockState blockState, BlockState blockState2) {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos blockPos2 = blockPos.relative(direction);
-            if (blockState.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected() == blockState2.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected() || !level.getBlockState(blockPos2).isRedstoneConductor(level, blockPos2))
-                continue;
-            level.updateNeighborsAtExceptFromFacing(blockPos2, blockState2.getBlock(), direction.getOpposite());
+            if (blockState.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected() != blockState2.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected() && level.getBlockState(blockPos2).isRedstoneConductor(level, blockPos2))
+                level.updateNeighborsAtExceptFromFacing(blockPos2, blockState2.getBlock(), direction.getOpposite());
         }
+    }
+
+    public int getColor(BlockState blockState) {
+        //#if MC>=11903
+        Vector3f color = COLORS[blockState.getValue(powerProperty)];
+        return Mth.color(color.x(), color.y(), color.z());
+        //#else
+        //$$ Vec3 color = COLORS[blockState.getValue(powerProperty)];
+        //$$ return Mth.color((float) color.x(), (float) color.y(), (float) color.z());
+        //#endif
     }
 }

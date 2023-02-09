@@ -17,7 +17,11 @@ public class RedStoneWireBlockMixin {
 
     @Redirect(
             method = "updateIndirectNeighbourShapes",
+            //#if MC>=11903
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z")
+            //#else
+            //$$ at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z", ordinal = 0)
+            //#endif
     )
     public boolean updateIndirectNeighbourShapesAdd(BlockState instance, Block block) {
         return instance.is(Blocks.REDSTONE_WIRE) || instance.getBlock() instanceof StrongRedStoneWireBlock;
