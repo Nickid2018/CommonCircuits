@@ -1,9 +1,8 @@
 plugins {
-    id("fabric-loom").version("1.0-SNAPSHOT").apply(false)
+    id("fabric-loom").version("1.1-SNAPSHOT").apply(false)
     id("org.ajoberstar.grgit").version("5.0.0")
     // https://github.com/ReplayMod/preprocessor
-    // https://github.com/Fallen-Breath/preprocessor
-    id("com.replaymod.preprocess").version("b7207cffa9")
+    id("com.replaymod.preprocess").version("SNAPSHOT")
 }
 
 // Preprocessor graph
@@ -13,7 +12,7 @@ preprocess {
     def mc1182 = createNode("1.18.2", 1_18_02, "mojang")
     def mc1193 = createNode("1.19.3", 1_19_03, "mojang")
 
-    mc1165.link(mc1171, null)
-    mc1171.link(mc1182, null)
-    mc1182.link(mc1193, null)
+    mc1193.link(mc1182, file("versions/mapping-1.19.3-1.18.2.txt"))
+    mc1182.link(mc1171, null)
+    mc1171.link(mc1165, null)
 }

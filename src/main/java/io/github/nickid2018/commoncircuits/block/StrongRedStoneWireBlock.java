@@ -1,14 +1,8 @@
 package io.github.nickid2018.commoncircuits.block;
 
-//#if MC>=11903
 import net.minecraft.util.RandomSource;
-import org.joml.Vector3f;
-//#else
-//$$ import java.util.Random;
-//$$ import com.mojang.math.Vector3f;
-//$$ import net.minecraft.world.phys.Vec3;
-//#endif
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Sets;
 import io.github.nickid2018.commoncircuits.mixin.RedStoneWireBlockAccessor;
 import net.minecraft.Util;
@@ -31,8 +25,7 @@ import net.minecraft.world.level.block.state.properties.RedstoneSide;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,11 +39,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
     private final int maxPower;
     private final BlockState crossState;
     private final Map<BlockState, VoxelShape> shapeCache = new HashMap<>();
-    //#if MC>=11903
     private final Vector3f[] COLORS;
-    //#else
-    //$$ private final Vec3[] COLORS;
-    //#endif
 
     public StrongRedStoneWireBlock(Properties properties, int maxPower, IntegerProperty powerProperty, float baseG, float baseB) {
         super(properties);
@@ -72,7 +61,6 @@ public abstract class StrongRedStoneWireBlock extends Block {
                 continue;
             shapeCache.put(blockState, ((RedStoneWireBlockAccessor) Blocks.REDSTONE_WIRE).calculateRedstoneShape(blockState));
         }
-        //#if MC>=11903
         COLORS = Util.make(new Vector3f[maxPower + 1], vec3s -> {
             for (int i = 0; i <= maxPower; ++i) {
                 float f = (float) i / maxPower;
@@ -82,21 +70,6 @@ public abstract class StrongRedStoneWireBlock extends Block {
                 vec3s[i] = new Vector3f(g, h, j);
             }
         });
-        //#else
-        //$$ COLORS = Util.make(new Vec3[maxPower + 1], vec3s -> {
-        //$$    for (int i = 0; i <= maxPower; ++i) {
-        //$$        float f = (float) i / maxPower;
-        //$$        float g = f * 0.6f + (f > 0.0f ? 0.4f : 0.3f);
-        //$$        float h = Mth.clamp(f * f * 0.7f - 0.5f, baseG, baseB);
-        //$$        float j = Mth.clamp(f * f * 0.6f - 0.7f, baseG, baseB);
-        //$$        vec3s[i] = new Vec3(g, h, j);
-        //$$    }
-        //$$ });
-        //#endif
-    }
-
-    public IntegerProperty getPowerProperty() {
-        return powerProperty;
     }
 
     public static int powerConvert(int now, int sourceRange, int targetRange) {
@@ -133,7 +106,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
 
     private BlockState getConnectionState(BlockGetter blockGetter, BlockState blockState, BlockPos blockPos) {
         boolean bl = isDot(blockState);
-        blockState = this.getMissingConnections(blockGetter, this.defaultBlockState().setValue(powerProperty, blockState.getValue(powerProperty)), blockPos);
+        blockState = this.getMissingConnections(blockGetter, defaultBlockState().setValue(powerProperty, blockState.getValue(powerProperty)), blockPos);
         if (bl && isDot(blockState)) {
             return blockState;
         }
@@ -419,11 +392,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
         return shouldSignal();
     }
 
-    //#if MC>=11903
     private void spawnParticlesAlongLine(Level level, RandomSource random, BlockPos blockPos, Vector3f vec3, Direction direction, Direction direction2, float f, float g) {
-    //#else
-    //$$ private void spawnParticlesAlongLine(Level level, Random random, BlockPos blockPos, Vec3 vec3, Direction direction, Direction direction2, float f, float g) {
-    //#endif
         float h = g - f;
         if (random.nextFloat() >= 0.2f * h)
             return;
@@ -431,21 +400,15 @@ public abstract class StrongRedStoneWireBlock extends Block {
         double d = 0.5 + 0.4375f * direction.getStepX() + j * direction2.getStepX();
         double e = 0.5 + 0.4375f * direction.getStepY() + j * direction2.getStepY();
         double k = 0.5 + 0.4375f * direction.getStepZ() + j * direction2.getStepZ();
-        //#if MC>=11903
+        //#if MC>=11701
         level.addParticle(new DustParticleOptions(vec3, 1.0f), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
-        //#elseif MC>=11701
-        //$$ level.addParticle(new DustParticleOptions(new Vector3f(vec3), 1.0F), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
         //#else
         //$$ level.addParticle(new DustParticleOptions((float) vec3.x(), (float) vec3.y(), (float) vec3.z(), 1.0F), blockPos.getX() + d, blockPos.getY() + e, blockPos.getZ() + k, 0.0, 0.0, 0.0);
         //#endif
     }
 
     @Override
-    //#if MC>=11903
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {
-    //#else
-    //$$ public void animateTick(BlockState blockState, Level level, BlockPos blockPos, Random random) {
-    //#endif
         int i = blockState.getValue(powerProperty);
         if (i == 0)
             return;
@@ -519,12 +482,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
     }
 
     public int getColor(BlockState blockState) {
-        //#if MC>=11903
         Vector3f color = COLORS[blockState.getValue(powerProperty)];
         return Mth.color(color.x(), color.y(), color.z());
-        //#else
-        //$$ Vec3 color = COLORS[blockState.getValue(powerProperty)];
-        //$$ return Mth.color((float) color.x(), (float) color.y(), (float) color.z());
-        //#endif
     }
 }
