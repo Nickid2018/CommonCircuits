@@ -6,9 +6,12 @@ import net.minecraft.core.registries.Registries;
 //#elseif MC>=11802
 //$$ import net.minecraft.tags.TagKey;
 //$$ import net.minecraft.core.Registry;
-//#else
+//#elseif MC>=11701
 //$$ import net.minecraft.tags.Tag;
 //$$ import net.fabricmc.fabric.api.tag.TagFactory;
+//$$ import net.fabricmc.fabric.api.tag.TagRegistry;
+//#else
+//$$ import net.minecraft.tags.Tag;
 //$$ import net.fabricmc.fabric.api.tag.TagRegistry;
 //#endif
 

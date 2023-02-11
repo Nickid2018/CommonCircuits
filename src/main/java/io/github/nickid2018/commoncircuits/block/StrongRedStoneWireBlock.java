@@ -1,6 +1,9 @@
 package io.github.nickid2018.commoncircuits.block;
 
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Sets;
@@ -34,6 +37,15 @@ import java.util.Map;
 import static net.minecraft.world.level.block.RedStoneWireBlock.*;
 
 public abstract class StrongRedStoneWireBlock extends Block {
+
+    public static StrongRedStoneWireBlock strongRedStoneWire(int power, float baseG, float baseB) {
+        IntegerProperty property = IntegerProperty.create("power", 0, power);
+        return new StrongRedStoneWireBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak(), power, property, baseG, baseB) {
+            protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+                builder.add(NORTH, EAST, SOUTH, WEST, property);
+            }
+        };
+    }
 
     private final IntegerProperty powerProperty;
     private final int maxPower;
