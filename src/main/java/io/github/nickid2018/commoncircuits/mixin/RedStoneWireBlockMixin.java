@@ -1,5 +1,6 @@
 package io.github.nickid2018.commoncircuits.mixin;
 
+import io.github.nickid2018.commoncircuits.block.BaseCircuitPlateBlock;
 import io.github.nickid2018.commoncircuits.block.StrongRedStoneWireBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
@@ -53,5 +54,10 @@ public class RedStoneWireBlockMixin {
     private static void shouldConnectToAdd(BlockState blockState, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         if (blockState.getBlock() instanceof StrongRedStoneWireBlock)
             cir.setReturnValue(true);
+        if (blockState.getBlock() instanceof BaseCircuitPlateBlock) {
+            BaseCircuitPlateBlock plate = (BaseCircuitPlateBlock) blockState.getBlock();
+            cir.setReturnValue(direction != null &&
+                    (plate.inputThisWay(blockState, direction.getOpposite()) || plate.outputThisWay(blockState, direction.getOpposite())));
+        }
     }
 }

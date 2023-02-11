@@ -200,9 +200,16 @@ public abstract class BaseCircuitPlateBlock extends Block {
         }
     }
 
-    private boolean inputThisWay(BlockState state, Direction direction) {
+    public boolean inputThisWay(BlockState state, Direction direction) {
         for (int i = 0; i < provider.getRequiredInputs(); i++)
             if (state.getValue(inputProperties[i]) == direction)
+                return true;
+        return false;
+    }
+
+    public boolean outputThisWay(BlockState state, Direction direction) {
+        for (int i = 0; i < provider.getRequiredOutputs(); i++)
+            if (state.getValue(outputProperties[i]) == direction)
                 return true;
         return false;
     }

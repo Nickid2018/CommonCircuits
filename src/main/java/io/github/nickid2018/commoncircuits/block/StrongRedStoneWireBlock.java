@@ -394,6 +394,11 @@ public abstract class StrongRedStoneWireBlock extends Block {
             Direction direction2 = blockState.getValue(RepeaterBlock.FACING);
             return direction2 == direction || direction2.getOpposite() == direction;
         }
+        if (blockState.getBlock() instanceof BaseCircuitPlateBlock) {
+            BaseCircuitPlateBlock plate = (BaseCircuitPlateBlock) blockState.getBlock();
+            return direction != null &&
+                    (plate.inputThisWay(blockState, direction.getOpposite()) || plate.outputThisWay(blockState, direction.getOpposite()));
+        }
         if (blockState.is(Blocks.OBSERVER))
             return direction == blockState.getValue(ObserverBlock.FACING);
         return blockState.isSignalSource() && direction != null;

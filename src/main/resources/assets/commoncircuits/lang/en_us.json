@@ -2,6 +2,12 @@
   "item.commoncircuits.high_power_redstone": "High-power redstone",
   "item.commoncircuits.super_power_redstone": "Super-power redstone",
   "item.commoncircuits.and_gate_plate": "AND gate plate",
+  "item.commoncircuits.or_gate_plate": "OR gate plate",
+  "item.commoncircuits.xor_gate_plate": "XOR gate plate",
+  "item.commoncircuits.nand_gate_plate": "NAND gate plate",
+  "item.commoncircuits.nor_gate_plate": "NOR gate plate",
+  "item.commoncircuits.xnor_gate_plate": "XNOR gate plate",
+  "item.commoncircuits.not_gate_plate": "NOT gate plate",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

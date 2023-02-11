@@ -1,0 +1,192 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "commoncircuits:block/base_plate_base"
+      }
+    },
+    {
+      "when": {
+        "output1": "north"
+      },
+      "apply": {
+        "model": "commoncircuits:block/nor_gate_overlay"
+      }
+    },
+    {
+      "when": {
+        "output1": "east"
+      },
+      "apply": {
+        "model": "commoncircuits:block/nor_gate_overlay",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "output1": "south"
+      },
+      "apply": {
+        "model": "commoncircuits:block/nor_gate_overlay",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "output1": "west"
+      },
+      "apply": {
+        "model": "commoncircuits:block/nor_gate_overlay",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "input1": "north"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input1"
+      }
+    },
+    {
+      "when": {
+        "input1": "east"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "input1": "south"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "input1": "west"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "input2": "north"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input2"
+      }
+    },
+    {
+      "when": {
+        "input2": "east"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "input2": "south"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "input2": "west"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_input2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "output1": "north",
+        "cache1": "false"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1"
+      }
+    },
+    {
+      "when": {
+        "output1": "east",
+        "cache1": "false"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "output1": "south",
+        "cache1": "false"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "output1": "west",
+        "cache1": "false"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "output1": "north",
+        "cache1": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1_active"
+      }
+    },
+    {
+      "when": {
+        "output1": "east",
+        "cache1": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1_active",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "output1": "south",
+        "cache1": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1_active",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "output1": "west",
+        "cache1": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/base_plate_output1_active",
+        "y": 270
+      }
+    }
+  ]
+}
