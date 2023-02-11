@@ -16,3 +16,26 @@ preprocess {
     mc1182.link(mc1171, null)
     mc1171.link(mc1165, null)
 }
+
+String getBuildVersion() {
+    def name = project.mod_version
+    if (grgit == null)
+        name += "-gitless"
+    else {
+        name += "-patch.${grgit.log().size()}-"
+        def lastCommit = grgit.log(maxCommits: 1)
+        name += lastCommit == null ? "uncommited" : lastCommit.first().abbreviatedId
+    }
+    def env = System.getenv()
+    if (env.GITHUB_RUN_NUMBER != null)
+        name += "-${env.GITHUB_RUN_NUMBER}"
+    else
+        name += "-local"
+    if (env.BUILD_TYPE != null)
+        name += "-${env.BUILD_TYPE}"
+    else
+        name += "-dev"
+    return name
+}
+
+setVersion(getBuildVersion())

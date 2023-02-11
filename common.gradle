@@ -87,7 +87,7 @@ loom {
 
 // Project settings -----------------------------------------------------------
 setArchivesBaseName("${project.mod_simple_name}-${project.minecraft_version}")
-setVersion(project.parent.mod_version)
+setVersion(project.parent.version)
 setGroup(project.maven_group)
 
 if (mcVersion >= 11800) {
