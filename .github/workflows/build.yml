@@ -45,7 +45,7 @@ jobs:
       - name: Upload assets
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.mod_info.outputs.mod_name }} ${{ steps.mod_info.outputs.mod_version }}+{{ github.run_number }}
+          name: ${{ steps.mod_info.outputs.mod_name }} ${{ steps.mod_info.outputs.mod_version }}+${{ github.run_number }}
           path: |
             LICENSE
             versions/1.16.5/build/libs/*.jar
