@@ -13,5 +13,6 @@ public class CommonCircuitsBlockModels {
                 CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE, CommonCircuitsBlocks.SUPER_POWER_REDSTONE_WIRE);
         BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.SUPER_POWER_REDSTONE_WIRE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.AND_GATE_PLATE, RenderType.cutout());
     }
 }

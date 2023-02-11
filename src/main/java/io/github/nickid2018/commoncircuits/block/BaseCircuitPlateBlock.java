@@ -84,7 +84,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
     @SuppressWarnings("rawtypes")
     protected Property[] outputCachedProperties;
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     public BaseCircuitPlateBlock(Properties properties, LogicProvider provider) {
         super(properties);
         this.provider = provider;

@@ -1,6 +1,7 @@
 {
   "item.commoncircuits.high_power_redstone": "高能红石",
   "item.commoncircuits.super_power_redstone": "超能红石",
+  "item.commoncircuits.and_gate_plate": "与门处理版",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }
