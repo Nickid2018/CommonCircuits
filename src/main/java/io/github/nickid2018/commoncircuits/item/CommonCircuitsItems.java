@@ -33,6 +33,7 @@ public class CommonCircuitsItems {
 
     public static final Item HIGH_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE, new Item.Properties());
     public static final Item SUPER_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.SUPER_POWER_REDSTONE_WIRE, new Item.Properties());
+    public static final Item AND_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.AND_GATE_PLATE, new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
@@ -60,6 +61,7 @@ public class CommonCircuitsItems {
     public static void registerItems() {
         registerItem("high_power_redstone", HIGH_POWER_REDSTONE);
         registerItem("super_power_redstone", SUPER_POWER_REDSTONE);
+        registerItem("and_gate_plate", AND_GATE_PLATE);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

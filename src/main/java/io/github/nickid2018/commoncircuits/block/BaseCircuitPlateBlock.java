@@ -14,10 +14,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.TickPriority;
@@ -48,9 +51,9 @@ public abstract class BaseCircuitPlateBlock extends Block {
             {{Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.NORTH}}
     };
 
-    public static BaseCircuitPlateBlock baseCircuitPlateBlock(Block.Properties properties, LogicProvider provider) {
+    public static BaseCircuitPlateBlock baseCircuitPlateBlock(LogicProvider provider) {
 
-        return new BaseCircuitPlateBlock(properties, provider) {
+        return new BaseCircuitPlateBlock(Properties.of(Material.DECORATION).instabreak().sound(SoundType.WOOD), provider) {
             @Override
             @SuppressWarnings("unchecked")
             protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -60,6 +63,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
                     builder.add(INPUT_PROPERTIES.get(i));
                 int outputCount = provider.getRequiredOutputs();
                 OUTPUT_PROPERTIES.subList(0, outputCount).toArray(outputProperties = new EnumProperty[outputCount]);
+                outputCachedProperties = new Property[outputCount];
                 for (int i = 0; i < outputCount; i++) {
                     builder.add(OUTPUT_PROPERTIES.get(i));
                     builder.add(outputCachedProperties[i] = provider.getOutputs().get(i).createProperty("cache" + (i + 1)));
@@ -132,7 +136,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
         Direction placeDir = blockPlaceContext.getHorizontalDirection();
         int clockwise = 0;
         while (placeDir != Direction.NORTH) {
-            placeDir = placeDir.getClockWise();
+            placeDir = placeDir.getCounterClockWise();
             clockwise++;
         }
         for (EnumProperty<Direction> inputProperty : inputProperties) {
@@ -244,21 +248,19 @@ public abstract class BaseCircuitPlateBlock extends Block {
             Direction direction = blockState.getValue(inputProperties[i]);
             inputs[i] = level.getSignal(blockPos.relative(direction), direction);
         }
+        BlockState newState = blockState;
         for (int i = 0; i < provider.getRequiredOutputs(); i++) {
-            Direction direction = blockState.getValue(outputProperties[i]);
             int output = provider.runLogic(i, input -> inputs[input]);
             LogicType outputType = provider.getOutputs().get(i);
-            if (output != outputType.getValue(outputCachedProperties[i], blockState)) {
-                level.setBlock(blockPos, blockState.setValue(outputCachedProperties[i], outputType.toValue(output)), 2);
-                level.updateNeighborsAt(blockPos.relative(direction), this);
-            }
+            newState = blockState.setValue(outputCachedProperties[i], outputType.toValue(output));
         }
         for (int i = 0; i < provider.getStores().size(); i++) {
             int output = provider.runLogic(i + provider.getRequiredOutputs(), input -> inputs[input]);
             LogicType outputType = provider.getStores().get(i);
-            if (output != outputType.getValue(storedProperties[i], blockState))
-                level.setBlock(blockPos, blockState.setValue(storedProperties[i], outputType.toValue(output)), 2);
+            newState = blockState.setValue(storedProperties[i], outputType.toValue(output));
         }
+        if (newState != blockState)
+            level.setBlock(blockPos, newState, 2);
         updateNeighborsInOutputs(level, blockPos, blockState);
     }
 }
