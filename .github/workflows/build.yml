@@ -37,10 +37,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Process sources
+      - name: Preprocess resources
         env:
           BUILD_TYPE: "BETA"
-        run: ./gradlew processResources
+        run: ./gradlew preprocessResources
 
       - name: Build with Gradle
         env:
