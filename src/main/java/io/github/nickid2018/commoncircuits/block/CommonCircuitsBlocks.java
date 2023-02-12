@@ -9,6 +9,11 @@ import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 public class CommonCircuitsBlocks {
 
@@ -30,6 +35,9 @@ public class CommonCircuitsBlocks {
             BaseCircuitPlateBlock.baseCircuitPlateBlock(LogicProvider.NOR);
     public static final BaseCircuitPlateBlock XNOR_GATE_PLATE =
             BaseCircuitPlateBlock.baseCircuitPlateBlock(LogicProvider.XNOR);
+    public static final RedstoneClockBlock REDSTONE_CLOCK =
+            new RedstoneClockBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.FIRE).requiresCorrectToolForDrops()
+                    .strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor((blockState, blockGetter, blockPos) -> false));
 
     private static void register(String name, Block block) {
         //#if MC>=11903
@@ -49,5 +57,6 @@ public class CommonCircuitsBlocks {
         register("nand_gate_plate", NAND_GATE_PLATE);
         register("nor_gate_plate", NOR_GATE_PLATE);
         register("xnor_gate_plate", XNOR_GATE_PLATE);
+        register("redstone_clock", REDSTONE_CLOCK);
     }
 }

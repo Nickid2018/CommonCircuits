@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=true": {
+      "model": "commoncircuits:block/redstone_clock_on"
+    },
+    "powered=false": {
+      "model": "commoncircuits:block/redstone_clock"
+    }
+  }
+}

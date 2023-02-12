@@ -40,6 +40,7 @@ public class CommonCircuitsItems {
     public static final Item NAND_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.NAND_GATE_PLATE, new Item.Properties());
     public static final Item NOR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.NOR_GATE_PLATE, new Item.Properties());
     public static final Item XNOR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.XNOR_GATE_PLATE, new Item.Properties());
+    public static final Item REDSTONE_CLOCK = itemNameBlockItem(CommonCircuitsBlocks.REDSTONE_CLOCK, new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
@@ -74,6 +75,7 @@ public class CommonCircuitsItems {
         registerItem("nand_gate_plate", NAND_GATE_PLATE);
         registerItem("nor_gate_plate", NOR_GATE_PLATE);
         registerItem("xnor_gate_plate", XNOR_GATE_PLATE);
+        registerItem("redstone_clock", REDSTONE_CLOCK);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

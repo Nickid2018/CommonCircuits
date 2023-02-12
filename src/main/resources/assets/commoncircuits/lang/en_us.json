@@ -8,6 +8,7 @@
   "item.commoncircuits.nor_gate_plate": "NOR gate plate",
   "item.commoncircuits.xnor_gate_plate": "XNOR gate plate",
   "item.commoncircuits.not_gate_plate": "NOT gate plate",
+  "item.commoncircuits.redstone_clock": "Redstone clock",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }
