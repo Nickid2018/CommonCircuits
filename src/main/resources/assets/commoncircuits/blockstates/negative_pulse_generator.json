@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=true": {
+      "model": "commoncircuits:block/negative_pulse_generator_on"
+    },
+    "powered=false": {
+      "model": "commoncircuits:block/negative_pulse_generator"
+    }
+  }
+}

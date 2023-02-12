@@ -41,6 +41,8 @@ public class CommonCircuitsItems {
     public static final Item NOR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.NOR_GATE_PLATE, new Item.Properties());
     public static final Item XNOR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.XNOR_GATE_PLATE, new Item.Properties());
     public static final Item REDSTONE_CLOCK = itemNameBlockItem(CommonCircuitsBlocks.REDSTONE_CLOCK, new Item.Properties());
+    public static final Item POSITIVE_PULSE_GENERATOR = itemNameBlockItem(CommonCircuitsBlocks.POSITIVE_PULSE_GENERATOR, new Item.Properties());
+    public static final Item NEGATIVE_PULSE_GENERATOR = itemNameBlockItem(CommonCircuitsBlocks.NEGATIVE_PULSE_GENERATOR, new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
@@ -76,6 +78,8 @@ public class CommonCircuitsItems {
         registerItem("nor_gate_plate", NOR_GATE_PLATE);
         registerItem("xnor_gate_plate", XNOR_GATE_PLATE);
         registerItem("redstone_clock", REDSTONE_CLOCK);
+        registerItem("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
+        registerItem("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "commoncircuits:block/negative_pulse_generator"
+  }
+}

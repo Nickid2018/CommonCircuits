@@ -38,6 +38,14 @@ public class CommonCircuitsBlocks {
     public static final RedstoneClockBlock REDSTONE_CLOCK =
             new RedstoneClockBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.FIRE).requiresCorrectToolForDrops()
                     .strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor((blockState, blockGetter, blockPos) -> false));
+    public static final RedstonePulseGeneratorBlock POSITIVE_PULSE_GENERATOR =
+            new RedstonePulseGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.FIRE).requiresCorrectToolForDrops()
+                    .strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor((blockState, blockGetter, blockPos) -> false),
+                    true);
+    public static final RedstonePulseGeneratorBlock NEGATIVE_PULSE_GENERATOR =
+            new RedstonePulseGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.FIRE).requiresCorrectToolForDrops()
+                    .strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor((blockState, blockGetter, blockPos) -> false),
+                    false);
 
     private static void register(String name, Block block) {
         //#if MC>=11903
@@ -58,5 +66,7 @@ public class CommonCircuitsBlocks {
         register("nor_gate_plate", NOR_GATE_PLATE);
         register("xnor_gate_plate", XNOR_GATE_PLATE);
         register("redstone_clock", REDSTONE_CLOCK);
+        register("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
+        register("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
     }
 }
