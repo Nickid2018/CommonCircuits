@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "commoncircuits:silver_ore",
+    "commoncircuits:redstone_clock",
+    "commoncircuits:positive_pulse_generator",
+    "commoncircuits:negative_pulse_generator"
+  ]
+}

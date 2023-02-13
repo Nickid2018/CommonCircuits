@@ -8,7 +8,7 @@
   "item.commoncircuits.nor_gate_plate": "或非门处理版",
   "item.commoncircuits.xnor_gate_plate": "同或门处理版",
   "item.commoncircuits.not_gate_plate": "非门处理版",
-  "item.commoncircuits.redstone_clock": "红石钟",
+  "item.commoncircuits.redstone_clock": "时钟信号发生器",
   "item.commoncircuits.positive_pulse_generator": "正脉冲发生器",
   "item.commoncircuits.negative_pulse_generator": "负脉冲发生器",
   "item.commoncircuits.raw_silver": "粗银",

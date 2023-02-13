@@ -3,19 +3,21 @@
   "ambientocclusion": false,
   "textures": {
     "particle": "commoncircuits:block/base_plate_block_surface",
-    "plate": "commoncircuits:block/base_plate_block_surface"
+    "plate": "commoncircuits:block/base_plate_block_surface",
+    "side": "commoncircuits:block/base_plate_block_side",
+    "bottom": "minecraft:block/smooth_stone"
   },
   "elements": [
     {
       "from": [ 0, 0, 0 ],
       "to": [ 16, 2, 16 ],
       "faces": {
-        "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#plate", "cullface": "down" },
+        "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
         "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#plate" },
-        "north": { "uv": [ 0, 14, 16, 16 ], "texture": "#plate", "cullface": "north" },
-        "south": { "uv": [ 0, 14, 16, 16 ], "texture": "#plate", "cullface": "south" },
-        "west":  { "uv": [ 0, 14, 16, 16 ], "texture": "#plate", "cullface": "west" },
-        "east":  { "uv": [ 0, 14, 16, 16 ], "texture": "#plate", "cullface": "east" }
+        "north": { "uv": [ 0, 14, 16, 16 ], "texture": "#side", "cullface": "north" },
+        "south": { "uv": [ 0, 14, 16, 16 ], "texture": "#side", "cullface": "south" },
+        "west":  { "uv": [ 0, 14, 16, 16 ], "texture": "#side", "cullface": "west" },
+        "east":  { "uv": [ 0, 14, 16, 16 ], "texture": "#side", "cullface": "east" }
       }
     }
   ]
