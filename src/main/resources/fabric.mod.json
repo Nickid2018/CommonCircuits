@@ -12,6 +12,14 @@
       }
     }
   ],
+  "contributors": [
+    {
+      "name": "Archibald_Lee"
+    },
+    {
+      "name": "Eri_owo"
+    }
+  ],
   "contact": {
     "homepage": "{mod_homepage}",
     "issues": "https://github.com/${author}/${mod_simple_name}/issues",

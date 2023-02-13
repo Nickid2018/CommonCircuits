@@ -4,12 +4,16 @@ package io.github.nickid2018.commoncircuits.block;
 import net.minecraft.core.registries.BuiltInRegistries;
 //#endif
 
+//#if MC>=11701
+import net.minecraft.util.valueproviders.UniformInt;
+//#endif
+
 import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -46,6 +50,16 @@ public class CommonCircuitsBlocks {
             new RedstonePulseGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.FIRE).requiresCorrectToolForDrops()
                     .strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor((blockState, blockGetter, blockPos) -> false),
                     false);
+    public static final Block SILVER_BLOCK = new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
+            .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
+
+    //#if MC>=11903
+    public static final Block SILVER_ORE = new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
+            .requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5));
+    //#else
+    //$$ public static final Block SILVER_ORE = new OreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
+    //#endif
+
 
     private static void register(String name, Block block) {
         //#if MC>=11903
@@ -68,5 +82,7 @@ public class CommonCircuitsBlocks {
         register("redstone_clock", REDSTONE_CLOCK);
         register("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
         register("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
+        register("silver_ore", SILVER_ORE);
+        register("silver_block", SILVER_BLOCK);
     }
 }

@@ -11,6 +11,12 @@
   "item.commoncircuits.redstone_clock": "Redstone clock",
   "item.commoncircuits.positive_pulse_generator": "Positive pulse generator",
   "item.commoncircuits.negative_pulse_generator": "Negative pulse generator",
+  "item.commoncircuits.raw_silver": "Raw silver",
+  "item.commoncircuits.silver_ore": "Silver ore",
+  "item.commoncircuits.silver_block": "Silver block",
+  "item.commoncircuits.silver_ingot": "Silver ingot",
+  "item.commoncircuits.silver_dust": "Silver dust",
+  "item.commoncircuits.copper_dust": "Copper dust",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

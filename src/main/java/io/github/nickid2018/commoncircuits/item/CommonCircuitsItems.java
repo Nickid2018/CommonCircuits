@@ -43,12 +43,26 @@ public class CommonCircuitsItems {
     public static final Item REDSTONE_CLOCK = itemNameBlockItem(CommonCircuitsBlocks.REDSTONE_CLOCK, new Item.Properties());
     public static final Item POSITIVE_PULSE_GENERATOR = itemNameBlockItem(CommonCircuitsBlocks.POSITIVE_PULSE_GENERATOR, new Item.Properties());
     public static final Item NEGATIVE_PULSE_GENERATOR = itemNameBlockItem(CommonCircuitsBlocks.NEGATIVE_PULSE_GENERATOR, new Item.Properties());
+    public static final Item SILVER_ORE = itemNameBlockItem(CommonCircuitsBlocks.SILVER_ORE, new Item.Properties());
+    public static final Item SILVER_BLOCK = itemNameBlockItem(CommonCircuitsBlocks.SILVER_BLOCK, new Item.Properties());
+    public static final Item COPPER_DUST = item(new Item.Properties());
+    public static final Item SILVER_DUST = item(new Item.Properties());
+    public static final Item RAW_SILVER = item(new Item.Properties());
+    public static final Item SILVER_INGOT = item(new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
         return new ItemNameBlockItem(block, properties);
         //#else
         //$$ return new ItemNameBlockItem(block, properties.tab(COMMON_CIRCUITS));
+        //#endif
+    }
+
+    private static Item item(Item.Properties properties) {
+        //#if MC>=11903
+        return new Item(properties);
+        //#else
+        //$$ return new Item(properties.tab(COMMON_CIRCUITS));
         //#endif
     }
 
@@ -80,6 +94,12 @@ public class CommonCircuitsItems {
         registerItem("redstone_clock", REDSTONE_CLOCK);
         registerItem("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
         registerItem("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
+        registerItem("silver_ore", SILVER_ORE);
+        registerItem("silver_block", SILVER_BLOCK);
+        registerItem("copper_dust", COPPER_DUST);
+        registerItem("silver_dust", SILVER_DUST);
+        registerItem("raw_silver", RAW_SILVER);
+        registerItem("silver_ingot", SILVER_INGOT);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

@@ -11,6 +11,12 @@
   "item.commoncircuits.redstone_clock": "红石钟",
   "item.commoncircuits.positive_pulse_generator": "正脉冲发生器",
   "item.commoncircuits.negative_pulse_generator": "负脉冲发生器",
+  "item.commoncircuits.raw_silver": "粗银",
+  "item.commoncircuits.silver_ore": "银矿石",
+  "item.commoncircuits.silver_block": "银块",
+  "item.commoncircuits.silver_ingot": "银锭",
+  "item.commoncircuits.silver_dust": "银粉",
+  "item.commoncircuits.copper_dust": "铜粉",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }
