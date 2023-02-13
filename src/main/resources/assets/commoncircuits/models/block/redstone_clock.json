@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "commoncircuits:block/redstone_clock"
+    "end": "commoncircuits:block/redstone_clock_top",
+    "side": "commoncircuits:block/redstone_clock_side"
   }
 }

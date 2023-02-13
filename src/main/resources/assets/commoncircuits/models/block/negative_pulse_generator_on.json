@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "commoncircuits:block/negative_pulse_generator_on"
+    "end": "commoncircuits:block/negative_pulse_generator_top_on",
+    "side": "commoncircuits:block/negative_pulse_generator_side_on"
   }
 }
