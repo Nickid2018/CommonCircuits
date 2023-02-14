@@ -35,16 +35,11 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
 
     public static final BooleanProperty[] DIRECTIONS = new BooleanProperty[]{DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
-    private VoxelShape[] shapes = new VoxelShape[64];
+    private final VoxelShape[] shapes = new VoxelShape[64];
 
     private final int channels;
 
     public static final List<Block> CONNECT_WHITELIST = new ArrayList<>();
-
-    static {
-        CONNECT_WHITELIST.add(Blocks.PISTON);
-        CONNECT_WHITELIST.add(Blocks.STICKY_PISTON);
-    }
 
     public AdvancedRedstoneWireBlock(Properties properties, int size, int channels) {
         super(properties);
@@ -183,20 +178,5 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
             if (entity instanceof AdvancedRedstoneWireBlockEntity)
                 ((AdvancedRedstoneWireBlockEntity) entity).updateAllChannels();
         }
-    }
-
-    @Override
-    public int getSignal(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, Direction direction) {
-        BlockState requestedState = blockGetter.getBlockState(blockPos.relative(direction));
-        if (!blockState.getValue(DIRECTIONS[direction.ordinal()]))
-            return 0;
-        if (requestedState.getBlock() instanceof StrongRedStoneWireBlock)
-            return 0;
-        if (requestedState.is(Blocks.REDSTONE_WIRE))
-            return 0;
-        BlockEntity entity = blockGetter.getBlockEntity(blockPos);
-        if (entity instanceof AdvancedRedstoneWireBlockEntity)
-            return ((AdvancedRedstoneWireBlockEntity) entity).getMaxSignalRaw();
-        return 0;
     }
 }
