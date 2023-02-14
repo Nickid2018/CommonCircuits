@@ -37,6 +37,8 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
 
     private VoxelShape[] shapes = new VoxelShape[64];
 
+    private final int channels;
+
     public static final List<Block> CONNECT_WHITELIST = new ArrayList<>();
 
     static {
@@ -44,7 +46,7 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
         CONNECT_WHITELIST.add(Blocks.STICKY_PISTON);
     }
 
-    public AdvancedRedstoneWireBlock(Properties properties, int size) {
+    public AdvancedRedstoneWireBlock(Properties properties, int size, int channels) {
         super(properties);
         registerDefaultState(getStateDefinition().any()
                 .setValue(DOWN, false)
@@ -77,6 +79,11 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
                 shape = Shapes.or(shape, east);
             shapes[i] = shape;
         }
+        this.channels = channels;
+    }
+
+    public int getChannels() {
+        return channels;
     }
 
     @Override
@@ -114,9 +121,15 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
+    //#if MC>=11701
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new AdvancedRedstoneWireBlockEntity(blockPos, blockState);
     }
+    //#else
+    //$$ public BlockEntity newBlockEntity(BlockGetter blockGetter) {
+    //$$     return new AdvancedRedstoneWireBlockEntity(channels);
+    //$$ }
+    //#endif
 
     private boolean shouldConnectTo(Level level, BlockPos pos, Direction direction) {
         BlockState state = level.getBlockState(pos.relative(direction));

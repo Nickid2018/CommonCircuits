@@ -1,6 +1,5 @@
 package io.github.nickid2018.commoncircuits.block.entity;
 
-import io.github.nickid2018.commoncircuits.block.AdvancedCircuitBlock;
 import io.github.nickid2018.commoncircuits.block.AdvancedRedstoneWireBlock;
 import io.github.nickid2018.commoncircuits.block.CommonCircuitsBlocks;
 import net.minecraft.core.BlockPos;
@@ -15,19 +14,24 @@ import java.util.*;
 
 public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
 
-    public static final Map<Block, Integer> SUPPORT_CHANNELS = Map.of(
-            CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_1, 1,
-            CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_2, 2,
-            CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_4, 4,
-            CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_8, 8
-    );
-
     private int[] channels;
 
+    //#if MC>=11701
     public AdvancedRedstoneWireBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY, blockPos, blockState);
-        channels = new int[SUPPORT_CHANNELS.get(blockState.getBlock())];
+        channels = new int[((AdvancedRedstoneWireBlock) blockState.getBlock()).getChannels()];
     }
+    //#else
+    //$$ public AdvancedRedstoneWireBlockEntity() {
+    //$$     super(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
+    //$$     channels = new int[8];
+    //$$ }
+    //$$
+    //$$ public AdvancedRedstoneWireBlockEntity(int channelCount) {
+    //$$    super(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
+    //$$    channels = new int[channelCount];
+    //$$ }
+    //#endif
 
     private void updateNeighbors() {
         setChanged();
@@ -114,9 +118,11 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
                 visited.add(pos);
             }
             int finalMaxSignal = maxSignal;
-            for (BlockPos blockPos : visited)
-                level.getBlockEntity(blockPos, CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY)
-                        .ifPresent(blockEntity -> blockEntity.updateChannelForce(channelNumber, finalMaxSignal));
+            for (BlockPos blockPos : visited) {
+                BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                if (blockEntity instanceof AdvancedRedstoneWireBlockEntity)
+                    ((AdvancedRedstoneWireBlockEntity) blockEntity).updateChannelForce(channelNumber, finalMaxSignal);
+            }
         }
     }
 
@@ -148,9 +154,11 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
                 }
                 visited.add(pos);
             }
-            for (BlockPos blockPos : visited)
-                level.getBlockEntity(blockPos, CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY)
-                        .ifPresent(blockEntity -> blockEntity.updateAllChannelForce(signals));
+            for (BlockPos blockPos : visited) {
+                BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                if (blockEntity instanceof AdvancedRedstoneWireBlockEntity)
+                    ((AdvancedRedstoneWireBlockEntity) blockEntity).updateAllChannelForce(signals);
+            }
         }
     }
 
@@ -167,14 +175,27 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
+    //#if MC>=11802
+    public void saveAdditional(CompoundTag compoundTag) {
         super.saveAdditional(compoundTag);
+    //#else
+    //$$ public CompoundTag save(CompoundTag compoundTag) {
+    //$$     super.save(compoundTag);
+    //#endif
         compoundTag.putIntArray("channels", channels);
+        //#if MC<11802
+        //$$ return compoundTag;
+        //#endif
     }
 
     @Override
+    //#if MC>=11701
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
+    //#else
+    //$$ public void load(BlockState state, CompoundTag compoundTag) {
+    //$$     super.load(state, compoundTag);
+    //#endif
         channels = compoundTag.getIntArray("channels");
     }
 }

@@ -1,15 +1,7 @@
 package io.github.nickid2018.commoncircuits.block;
 
-//#if MC>=11903
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedCircuitBlockEntity;
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedRedstoneWireBlockEntity;
-import net.minecraft.core.registries.BuiltInRegistries;
-//#endif
-
-//#if MC>=11701
-import net.minecraft.util.valueproviders.UniformInt;
-//#endif
-
 import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 
 import net.minecraft.core.Registry;
@@ -17,10 +9,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+
+//#if MC>=11903
+import net.minecraft.core.registries.BuiltInRegistries;
+//#endif
+
+//#if MC>=11701
+import net.minecraft.util.valueproviders.UniformInt;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+//#else
+//$$ import java.util.function.Supplier;
+//#endif
 
 public class CommonCircuitsBlocks {
 
@@ -30,13 +34,13 @@ public class CommonCircuitsBlocks {
             StrongRedStoneWireBlock.strongRedStoneWire(60, 0.2f, 0.2f);
     public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_1
             = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.of(Material.WOOL, MaterialColor.FIRE)
-            .strength(0.5f, 0.5f).sound(SoundType.WOOL).isRedstoneConductor(((blockState, blockGetter, blockPos) -> false)), 1);
+            .strength(0.5f, 0.5f).sound(SoundType.WOOL).isRedstoneConductor(((blockState, blockGetter, blockPos) -> false)), 1, 1);
     public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_2
-            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 2);
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 2, 2);
     public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_4
-            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 3);
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 3, 4);
     public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_8
-            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 4);
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 4, 8);
     public static final BaseCircuitPlateBlock AND_GATE_PLATE =
             BaseCircuitPlateBlock.baseCircuitPlateBlock(LogicProvider.AND);
     public static final BaseCircuitPlateBlock OR_GATE_PLATE =
@@ -72,12 +76,23 @@ public class CommonCircuitsBlocks {
     //#endif
 
     public static final BlockEntityType<AdvancedRedstoneWireBlockEntity> ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY =
-            BlockEntityType.Builder.of(AdvancedRedstoneWireBlockEntity::new,
+            createBlockEntity(AdvancedRedstoneWireBlockEntity::new,
                     ADVANCED_REDSTONE_WIRE_BLOCK_1, ADVANCED_REDSTONE_WIRE_BLOCK_2,
-                    ADVANCED_REDSTONE_WIRE_BLOCK_4, ADVANCED_REDSTONE_WIRE_BLOCK_8).build(null);
+                    ADVANCED_REDSTONE_WIRE_BLOCK_4, ADVANCED_REDSTONE_WIRE_BLOCK_8);
 
     public static final BlockEntityType<AdvancedCircuitBlockEntity> ADVANCED_CIRCUIT_BLOCK_ENTITY =
-            BlockEntityType.Builder.of(AdvancedCircuitBlockEntity::new).build(null);
+            createBlockEntity(AdvancedCircuitBlockEntity::new);
+
+
+    //#if MC>=11701
+    private static <T extends BlockEntity> BlockEntityType<T> createBlockEntity(FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
+        return FabricBlockEntityTypeBuilder.create(factory, blocks).build(null);
+    }
+    //#else
+    //$$ private static <T extends BlockEntity> BlockEntityType<T> createBlockEntity(Supplier<T> factory, Block... blocks) {
+    //$$     return BlockEntityType.Builder.of(factory, blocks).build(null);
+    //$$ }
+    //#endif
 
 
     private static void register(String name, Block block) {
@@ -92,7 +107,7 @@ public class CommonCircuitsBlocks {
         //#if MC>=11903
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation("commoncircuits", name), blockEntityType);
         //#else
-        //$$ Registry.register(Registry.BLOCK_ENTITY, new ResourceLocation("commoncircuits", name), blockEntityType);
+        //$$ Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("commoncircuits", name), blockEntityType);
         //#endif
     }
 
