@@ -1,0 +1,22 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "wire": "commoncircuits:block/advanced_redstone_wire_8",
+    "particle": "commoncircuits:block/advanced_redstone_wire_8"
+  },
+  "elements": [
+    {
+      "from": [ 4, 4, 4 ],
+      "to": [ 12, 12, 12 ],
+      "shade": false,
+      "faces": {
+        "up": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" },
+        "down": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" },
+        "north": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" },
+        "east": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" },
+        "south": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" },
+        "west": { "uv": [ 0, 0, 8, 8 ], "texture": "#wire" }
+      }
+    }
+  ]
+}

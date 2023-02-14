@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_core_2"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "commoncircuits:block/a_redstone_wire_connect_2",
+        "x": 270
+      }
+    }
+  ]
+}

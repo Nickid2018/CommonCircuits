@@ -20,6 +20,9 @@ public class CommonCircuitsBlockModels {
         BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.NAND_GATE_PLATE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.NOR_GATE_PLATE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.XNOR_GATE_PLATE, RenderType.cutout());
-
+        BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_1, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_2, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_4, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_8, RenderType.cutout());
     }
 }

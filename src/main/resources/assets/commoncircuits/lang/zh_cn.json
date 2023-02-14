@@ -17,6 +17,8 @@
   "item.commoncircuits.silver_ingot": "银锭",
   "item.commoncircuits.silver_dust": "银粉",
   "item.commoncircuits.copper_dust": "铜粉",
+  "item.commoncircuits.p_semiconductor": "P型半导体",
+  "item.commoncircuits.n_semiconductor": "N型半导体",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }

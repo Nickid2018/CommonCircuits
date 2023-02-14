@@ -17,6 +17,8 @@
   "item.commoncircuits.silver_ingot": "Silver ingot",
   "item.commoncircuits.silver_dust": "Silver dust",
   "item.commoncircuits.copper_dust": "Copper dust",
+  "item.commoncircuits.p_semiconductor": "P-type semi-conductor",
+  "item.commoncircuits.n_semiconductor": "N-type semi-conductor",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

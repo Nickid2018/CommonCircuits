@@ -33,6 +33,10 @@ public class CommonCircuitsItems {
 
     public static final Item HIGH_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE, new Item.Properties());
     public static final Item SUPER_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.SUPER_POWER_REDSTONE_WIRE, new Item.Properties());
+    public static final Item ADVANCED_REDSTONE_WIRE_1 = itemNameBlockItem(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_1, new Item.Properties());
+    public static final Item ADVANCED_REDSTONE_WIRE_2 = itemNameBlockItem(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_2, new Item.Properties());
+    public static final Item ADVANCED_REDSTONE_WIRE_4 = itemNameBlockItem(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_4, new Item.Properties());
+    public static final Item ADVANCED_REDSTONE_WIRE_8 = itemNameBlockItem(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_8, new Item.Properties());
     public static final Item AND_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.AND_GATE_PLATE, new Item.Properties());
     public static final Item OR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.OR_GATE_PLATE, new Item.Properties());
     public static final Item XOR_GATE_PLATE = itemNameBlockItem(CommonCircuitsBlocks.XOR_GATE_PLATE, new Item.Properties());
@@ -49,6 +53,8 @@ public class CommonCircuitsItems {
     public static final Item SILVER_DUST = item(new Item.Properties());
     public static final Item RAW_SILVER = item(new Item.Properties());
     public static final Item SILVER_INGOT = item(new Item.Properties());
+    public static final Item P_SEMICONDUCTOR = item(new Item.Properties());
+    public static final Item N_SEMICONDUCTOR = item(new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
@@ -84,6 +90,10 @@ public class CommonCircuitsItems {
     public static void registerItems() {
         registerItem("high_power_redstone", HIGH_POWER_REDSTONE);
         registerItem("super_power_redstone", SUPER_POWER_REDSTONE);
+        registerItem("advanced_redstone_wire_1", ADVANCED_REDSTONE_WIRE_1);
+        registerItem("advanced_redstone_wire_2", ADVANCED_REDSTONE_WIRE_2);
+        registerItem("advanced_redstone_wire_4", ADVANCED_REDSTONE_WIRE_4);
+        registerItem("advanced_redstone_wire_8", ADVANCED_REDSTONE_WIRE_8);
         registerItem("and_gate_plate", AND_GATE_PLATE);
         registerItem("or_gate_plate", OR_GATE_PLATE);
         registerItem("xor_gate_plate", XOR_GATE_PLATE);
@@ -100,6 +110,8 @@ public class CommonCircuitsItems {
         registerItem("silver_dust", SILVER_DUST);
         registerItem("raw_silver", RAW_SILVER);
         registerItem("silver_ingot", SILVER_INGOT);
+        registerItem("p_semiconductor", P_SEMICONDUCTOR);
+        registerItem("n_semiconductor", N_SEMICONDUCTOR);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

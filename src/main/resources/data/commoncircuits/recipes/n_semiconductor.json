@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "*": {
+      "item": "minecraft:quartz"
+    },
+    "X": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "pattern": [
+    "#*#",
+    "*X*",
+    "#*#"
+  ],
+  "result": {
+    "item": "commoncircuits:n_semiconductor",
+    "count": 8
+  }
+}

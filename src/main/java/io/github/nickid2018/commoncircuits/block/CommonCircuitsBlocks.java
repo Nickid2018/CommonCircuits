@@ -1,6 +1,8 @@
 package io.github.nickid2018.commoncircuits.block;
 
 //#if MC>=11903
+import io.github.nickid2018.commoncircuits.block.entity.AdvancedCircuitBlockEntity;
+import io.github.nickid2018.commoncircuits.block.entity.AdvancedRedstoneWireBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 //#endif
 
@@ -15,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -25,6 +28,15 @@ public class CommonCircuitsBlocks {
             StrongRedStoneWireBlock.strongRedStoneWire(30, 0.15f, 0.15f);
     public static final StrongRedStoneWireBlock SUPER_POWER_REDSTONE_WIRE =
             StrongRedStoneWireBlock.strongRedStoneWire(60, 0.2f, 0.2f);
+    public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_1
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.of(Material.WOOL, MaterialColor.FIRE)
+            .strength(0.5f, 0.5f).sound(SoundType.WOOL).isRedstoneConductor(((blockState, blockGetter, blockPos) -> false)), 1);
+    public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_2
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 2);
+    public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_4
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 3);
+    public static final AdvancedRedstoneWireBlock ADVANCED_REDSTONE_WIRE_BLOCK_8
+            = new AdvancedRedstoneWireBlock(BlockBehaviour.Properties.copy(ADVANCED_REDSTONE_WIRE_BLOCK_1), 4);
     public static final BaseCircuitPlateBlock AND_GATE_PLATE =
             BaseCircuitPlateBlock.baseCircuitPlateBlock(LogicProvider.AND);
     public static final BaseCircuitPlateBlock OR_GATE_PLATE =
@@ -52,13 +64,20 @@ public class CommonCircuitsBlocks {
                     false);
     public static final Block SILVER_BLOCK = new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
             .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
-
     //#if MC>=11903
     public static final Block SILVER_ORE = new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
             .requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5));
     //#else
     //$$ public static final Block SILVER_ORE = new OreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
     //#endif
+
+    public static final BlockEntityType<AdvancedRedstoneWireBlockEntity> ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY =
+            BlockEntityType.Builder.of(AdvancedRedstoneWireBlockEntity::new,
+                    ADVANCED_REDSTONE_WIRE_BLOCK_1, ADVANCED_REDSTONE_WIRE_BLOCK_2,
+                    ADVANCED_REDSTONE_WIRE_BLOCK_4, ADVANCED_REDSTONE_WIRE_BLOCK_8).build(null);
+
+    public static final BlockEntityType<AdvancedCircuitBlockEntity> ADVANCED_CIRCUIT_BLOCK_ENTITY =
+            BlockEntityType.Builder.of(AdvancedCircuitBlockEntity::new).build(null);
 
 
     private static void register(String name, Block block) {
@@ -69,9 +88,21 @@ public class CommonCircuitsBlocks {
         //#endif
     }
 
+    private static void registerBlockEntity(String name, BlockEntityType<?> blockEntityType) {
+        //#if MC>=11903
+        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation("commoncircuits", name), blockEntityType);
+        //#else
+        //$$ Registry.register(Registry.BLOCK_ENTITY, new ResourceLocation("commoncircuits", name), blockEntityType);
+        //#endif
+    }
+
     public static void registerBlocks() {
         register("high_power_redstone_wire", HIGH_POWER_REDSTONE_WIRE);
         register("super_power_redstone_wire", SUPER_POWER_REDSTONE_WIRE);
+        register("advanced_redstone_wire_block_1", ADVANCED_REDSTONE_WIRE_BLOCK_1);
+        register("advanced_redstone_wire_block_2", ADVANCED_REDSTONE_WIRE_BLOCK_2);
+        register("advanced_redstone_wire_block_4", ADVANCED_REDSTONE_WIRE_BLOCK_4);
+        register("advanced_redstone_wire_block_8", ADVANCED_REDSTONE_WIRE_BLOCK_8);
         register("and_gate_plate", AND_GATE_PLATE);
         register("or_gate_plate", OR_GATE_PLATE);
         register("xor_gate_plate", XOR_GATE_PLATE);
@@ -84,5 +115,8 @@ public class CommonCircuitsBlocks {
         register("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
         register("silver_ore", SILVER_ORE);
         register("silver_block", SILVER_BLOCK);
+
+        registerBlockEntity("advanced_redstone_wire", ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
+        registerBlockEntity("advanced_circuit", ADVANCED_CIRCUIT_BLOCK_ENTITY);
     }
 }

@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -31,7 +30,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
 
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
 
-    private static final Direction[] HORIZONTAL_DIRECTIONS = new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+    private static final Direction[] HORIZONTAL_DIRECTIONS = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
     private static final List<EnumProperty<Direction>> INPUT_PROPERTIES = List.of(
             EnumProperty.create("input1", Direction.class, HORIZONTAL_DIRECTIONS),
@@ -45,7 +44,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
             EnumProperty.create("output3", Direction.class, HORIZONTAL_DIRECTIONS)
     );
 
-    public static final Direction[][][] DEFAULT_STATE = new Direction[][][] {
+    public static final Direction[][][] DEFAULT_STATE = new Direction[][][]{
             {{Direction.SOUTH, Direction.NORTH}, {Direction.SOUTH, Direction.WEST, Direction.EAST}, {Direction.SOUTH, Direction.NORTH, Direction.WEST, Direction.EAST}},
             {{Direction.WEST, Direction.EAST, Direction.NORTH}, {Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH}},
             {{Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.NORTH}}

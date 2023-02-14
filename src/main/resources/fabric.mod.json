@@ -6,24 +6,25 @@
   "description": "${mod_description}",
   "authors": [
     {
-      "name": "${author}",
+      "name": "Nickid2018",
       "contact": {
-        "homepage": "https://github.com/${author}"
+        "homepage": "https://github.com/Nickid2018"
       }
-    }
-  ],
-  "contributors": [
-    {
-      "name": "Archibald_Lee"
     },
     {
-      "name": "Eri_owo"
+      "name": "AlloyMa"
+    },
+    {
+      "name": "Akesato Chiba"
+    },
+    {
+      "name": "Eri Rochester"
     }
   ],
   "contact": {
     "homepage": "{mod_homepage}",
-    "issues": "https://github.com/${author}/${mod_simple_name}/issues",
-    "sources": "https://github.com/${author}/${mod_simple_name}"
+    "issues": "https://github.com/${main_author}/${mod_simple_name}/issues",
+    "sources": "https://github.com/${main_author}/${mod_simple_name}"
   },
   "license": "${mod_license}",
   "environment": "*",
