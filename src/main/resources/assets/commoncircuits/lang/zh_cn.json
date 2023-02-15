@@ -19,6 +19,24 @@
   "item.commoncircuits.copper_dust": "铜粉",
   "item.commoncircuits.p_semiconductor": "P型半导体",
   "item.commoncircuits.n_semiconductor": "N型半导体",
+  "item.commoncircuits.black_wax": "黑蜡",
+  "item.commoncircuits.diode": "二极管",
+  "item.commoncircuits.pmos": "PMOS",
+  "item.commoncircuits.nmos": "NMOS",
+  "item.commoncircuits.base_plate": "基础版",
+  "item.commoncircuits.and_gate": "与门",
+  "item.commoncircuits.or_gate": "或门",
+  "item.commoncircuits.xor_gate": "异或门",
+  "item.commoncircuits.nand_gate": "与非门",
+  "item.commoncircuits.nor_gate": "或非门",
+  "item.commoncircuits.xnor_gate": "同或门",
+  "item.commoncircuits.not_gate": "非门",
+  "item.commoncircuits.advanced_redstone_wire_1": "高级红石线缆（1通道）",
+  "item.commoncircuits.advanced_redstone_wire_2": "高级红石线缆（2通道）",
+  "item.commoncircuits.advanced_redstone_wire_4": "高级红石线缆（4通道）",
+  "item.commoncircuits.advanced_redstone_wire_8": "高级红石线缆（8通道）",
+
+  "container.commoncircuits.semiconductor_bench": "半导体装配台",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "commoncircuits:not_gate"
+    },
+    "P": {
+      "item": "commoncircuits:base_plate"
+    }
+  },
+  "pattern": [
+    "A",
+    "P"
+  ],
+  "result": {
+    "item": "commoncircuits:not_gate_plate"
+  }
+}

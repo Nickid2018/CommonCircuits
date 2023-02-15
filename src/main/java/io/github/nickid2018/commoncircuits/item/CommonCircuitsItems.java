@@ -31,6 +31,7 @@ public class CommonCircuitsItems {
 
     public static final List<Item> COMMON_CIRCUITS_ITEMS = new ArrayList<>();
 
+    // Blocks --------------------------------------------------------------------------------------
     public static final Item HIGH_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE, new Item.Properties());
     public static final Item SUPER_POWER_REDSTONE = itemNameBlockItem(CommonCircuitsBlocks.SUPER_POWER_REDSTONE_WIRE, new Item.Properties());
     public static final Item ADVANCED_REDSTONE_WIRE_1 = itemNameBlockItem(CommonCircuitsBlocks.ADVANCED_REDSTONE_WIRE_BLOCK_1, new Item.Properties());
@@ -49,12 +50,27 @@ public class CommonCircuitsItems {
     public static final Item NEGATIVE_PULSE_GENERATOR = itemNameBlockItem(CommonCircuitsBlocks.NEGATIVE_PULSE_GENERATOR, new Item.Properties());
     public static final Item SILVER_ORE = itemNameBlockItem(CommonCircuitsBlocks.SILVER_ORE, new Item.Properties());
     public static final Item SILVER_BLOCK = itemNameBlockItem(CommonCircuitsBlocks.SILVER_BLOCK, new Item.Properties());
+    public static final Item SEMICONDUCTOR_BENCH = itemNameBlockItem(CommonCircuitsBlocks.SEMICONDUCTOR_BENCH, new Item.Properties());
+
+    // Items -----------------------------------------------------------------------------------------------
     public static final Item COPPER_DUST = item(new Item.Properties());
     public static final Item SILVER_DUST = item(new Item.Properties());
     public static final Item RAW_SILVER = item(new Item.Properties());
     public static final Item SILVER_INGOT = item(new Item.Properties());
     public static final Item P_SEMICONDUCTOR = item(new Item.Properties());
     public static final Item N_SEMICONDUCTOR = item(new Item.Properties());
+    public static final Item BLACK_WAX = item(new Item.Properties());
+    public static final Item DIODE = item(new Item.Properties());
+    public static final Item PMOS = item(new Item.Properties());
+    public static final Item NMOS = item(new Item.Properties());
+    public static final Item AND_GATE = item(new Item.Properties());
+    public static final Item OR_GATE = item(new Item.Properties());
+    public static final Item XOR_GATE = item(new Item.Properties());
+    public static final Item NOT_GATE = item(new Item.Properties());
+    public static final Item NAND_GATE = item(new Item.Properties());
+    public static final Item NOR_GATE = item(new Item.Properties());
+    public static final Item XNOR_GATE = item(new Item.Properties());
+    public static final Item BASE_PLATE = item(new Item.Properties());
 
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
         //#if MC>=11903
@@ -106,12 +122,26 @@ public class CommonCircuitsItems {
         registerItem("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
         registerItem("silver_ore", SILVER_ORE);
         registerItem("silver_block", SILVER_BLOCK);
+        registerItem("semiconductor_bench", SEMICONDUCTOR_BENCH);
+
         registerItem("copper_dust", COPPER_DUST);
         registerItem("silver_dust", SILVER_DUST);
         registerItem("raw_silver", RAW_SILVER);
         registerItem("silver_ingot", SILVER_INGOT);
         registerItem("p_semiconductor", P_SEMICONDUCTOR);
         registerItem("n_semiconductor", N_SEMICONDUCTOR);
+        registerItem("black_wax", BLACK_WAX);
+        registerItem("diode", DIODE);
+        registerItem("pmos", PMOS);
+        registerItem("nmos", NMOS);
+        registerItem("and_gate", AND_GATE);
+        registerItem("or_gate", OR_GATE);
+        registerItem("xor_gate", XOR_GATE);
+        registerItem("not_gate", NOT_GATE);
+        registerItem("nand_gate", NAND_GATE);
+        registerItem("nor_gate", NOR_GATE);
+        registerItem("xnor_gate", XNOR_GATE);
+        registerItem("base_plate", BASE_PLATE);
 
         //#if MC>=11903
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));

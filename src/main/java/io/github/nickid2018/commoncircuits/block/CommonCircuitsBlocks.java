@@ -2,6 +2,7 @@ package io.github.nickid2018.commoncircuits.block;
 
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedCircuitBlockEntity;
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedRedstoneWireBlockEntity;
+import io.github.nickid2018.commoncircuits.block.entity.SemiconductorBenchBlockEntity;
 import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 
 import net.minecraft.core.Registry;
@@ -68,6 +69,11 @@ public class CommonCircuitsBlocks {
                     false);
     public static final Block SILVER_BLOCK = new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
             .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
+    public static final SemiconductorBenchBlock SEMICONDUCTOR_BENCH =
+            new SemiconductorBenchBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
+                    .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
+
+    // -------------------------------------------------------------------------------------------------
     //#if MC>=11903
     public static final Block SILVER_ORE = new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
             .requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5));
@@ -83,6 +89,9 @@ public class CommonCircuitsBlocks {
     public static final BlockEntityType<AdvancedCircuitBlockEntity> ADVANCED_CIRCUIT_BLOCK_ENTITY =
             createBlockEntity(AdvancedCircuitBlockEntity::new);
 
+    public static final BlockEntityType<SemiconductorBenchBlockEntity> SEMICONDUCTOR_BENCH_BLOCK_ENTITY =
+            createBlockEntity(SemiconductorBenchBlockEntity::new);
+
 
     //#if MC>=11701
     private static <T extends BlockEntity> BlockEntityType<T> createBlockEntity(FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
@@ -95,7 +104,7 @@ public class CommonCircuitsBlocks {
     //#endif
 
 
-    private static void register(String name, Block block) {
+    private static void registerBlock(String name, Block block) {
         //#if MC>=11903
         Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation("commoncircuits", name), block);
         //#else
@@ -112,26 +121,28 @@ public class CommonCircuitsBlocks {
     }
 
     public static void registerBlocks() {
-        register("high_power_redstone_wire", HIGH_POWER_REDSTONE_WIRE);
-        register("super_power_redstone_wire", SUPER_POWER_REDSTONE_WIRE);
-        register("advanced_redstone_wire_block_1", ADVANCED_REDSTONE_WIRE_BLOCK_1);
-        register("advanced_redstone_wire_block_2", ADVANCED_REDSTONE_WIRE_BLOCK_2);
-        register("advanced_redstone_wire_block_4", ADVANCED_REDSTONE_WIRE_BLOCK_4);
-        register("advanced_redstone_wire_block_8", ADVANCED_REDSTONE_WIRE_BLOCK_8);
-        register("and_gate_plate", AND_GATE_PLATE);
-        register("or_gate_plate", OR_GATE_PLATE);
-        register("xor_gate_plate", XOR_GATE_PLATE);
-        register("not_gate_plate", NOT_GATE_PLATE);
-        register("nand_gate_plate", NAND_GATE_PLATE);
-        register("nor_gate_plate", NOR_GATE_PLATE);
-        register("xnor_gate_plate", XNOR_GATE_PLATE);
-        register("redstone_clock", REDSTONE_CLOCK);
-        register("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
-        register("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
-        register("silver_ore", SILVER_ORE);
-        register("silver_block", SILVER_BLOCK);
+        registerBlock("high_power_redstone_wire", HIGH_POWER_REDSTONE_WIRE);
+        registerBlock("super_power_redstone_wire", SUPER_POWER_REDSTONE_WIRE);
+        registerBlock("advanced_redstone_wire_block_1", ADVANCED_REDSTONE_WIRE_BLOCK_1);
+        registerBlock("advanced_redstone_wire_block_2", ADVANCED_REDSTONE_WIRE_BLOCK_2);
+        registerBlock("advanced_redstone_wire_block_4", ADVANCED_REDSTONE_WIRE_BLOCK_4);
+        registerBlock("advanced_redstone_wire_block_8", ADVANCED_REDSTONE_WIRE_BLOCK_8);
+        registerBlock("and_gate_plate", AND_GATE_PLATE);
+        registerBlock("or_gate_plate", OR_GATE_PLATE);
+        registerBlock("xor_gate_plate", XOR_GATE_PLATE);
+        registerBlock("not_gate_plate", NOT_GATE_PLATE);
+        registerBlock("nand_gate_plate", NAND_GATE_PLATE);
+        registerBlock("nor_gate_plate", NOR_GATE_PLATE);
+        registerBlock("xnor_gate_plate", XNOR_GATE_PLATE);
+        registerBlock("redstone_clock", REDSTONE_CLOCK);
+        registerBlock("positive_pulse_generator", POSITIVE_PULSE_GENERATOR);
+        registerBlock("negative_pulse_generator", NEGATIVE_PULSE_GENERATOR);
+        registerBlock("silver_ore", SILVER_ORE);
+        registerBlock("silver_block", SILVER_BLOCK);
+        registerBlock("semiconductor_bench", SEMICONDUCTOR_BENCH);
 
         registerBlockEntity("advanced_redstone_wire", ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
         registerBlockEntity("advanced_circuit", ADVANCED_CIRCUIT_BLOCK_ENTITY);
+        registerBlockEntity("semiconductor_bench", SEMICONDUCTOR_BENCH_BLOCK_ENTITY);
     }
 }

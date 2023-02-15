@@ -2,7 +2,7 @@ package io.github.nickid2018.commoncircuits.block;
 
 import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 import io.github.nickid2018.commoncircuits.logic.LogicType;
-import io.github.nickid2018.commoncircuits.util.BlockTicksUtil;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -115,7 +115,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
         if (canSurvive(blockState, level, blockPos)) {
             if (!level.getBlockTicks().willTickThisTick(blockPos, this) && needRefresh(level, blockPos, blockState)) {
                 TickPriority tickPriority = shouldPrioritize(level, blockPos, blockState) ? TickPriority.HIGH : TickPriority.NORMAL;
-                BlockTicksUtil.scheduleTick(level, blockPos, this, 1, tickPriority);
+                CompatUtil.scheduleTick(level, blockPos, this, 1, tickPriority);
             }
         } else {
             dropResources(blockState, level, blockPos);
@@ -187,7 +187,7 @@ public abstract class BaseCircuitPlateBlock extends Block {
 
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
-        BlockTicksUtil.scheduleTick(level, blockPos, this, 1);
+        CompatUtil.scheduleTick(level, blockPos, this, 1);
     }
 
     private void updateNeighborsInOutputs(Level level, BlockPos blockPos, BlockState blockState) {

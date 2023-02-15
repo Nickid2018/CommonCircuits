@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": {
+      "item": "commoncircuits:pmos"
+    },
+    "N": {
+      "item": "commoncircuits:nmos"
+    },
+    "W": {
+      "tag": "c:copper_dusts"
+    }
+  },
+  "pattern": [
+    " P ",
+    "WWW",
+    " N "
+  ],
+  "result": {
+    "item": "commoncircuits:not_gate"
+  }
+}

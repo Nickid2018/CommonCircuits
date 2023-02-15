@@ -19,6 +19,24 @@
   "item.commoncircuits.copper_dust": "Copper dust",
   "item.commoncircuits.p_semiconductor": "P-type semi-conductor",
   "item.commoncircuits.n_semiconductor": "N-type semi-conductor",
+  "item.commoncircuits.black_wax": "Black wax",
+  "item.commoncircuits.diode": "Diode",
+  "item.commoncircuits.pmos": "PMOS",
+  "item.commoncircuits.nmos": "NMOS",
+  "item.commoncircuits.base_plate": "Base plate",
+  "item.commoncircuits.and_gate": "AND gate",
+  "item.commoncircuits.or_gate": "OR gate",
+  "item.commoncircuits.xor_gate": "XOR gate",
+  "item.commoncircuits.nand_gate": "NAND gate",
+  "item.commoncircuits.nor_gate": "NOR gate",
+  "item.commoncircuits.xnor_gate": "XNOR gate",
+  "item.commoncircuits.not_gate": "NOT gate",
+  "item.commoncircuits.advanced_redstone_wire_1": "Advanced redstone wire (1)",
+  "item.commoncircuits.advanced_redstone_wire_2": "Advanced redstone wire (2)",
+  "item.commoncircuits.advanced_redstone_wire_4": "Advanced redstone wire (4)",
+  "item.commoncircuits.advanced_redstone_wire_8": "Advanced redstone wire (8)",
+
+  "container.commoncircuits.semiconductor_bench": "Semiconductor bench",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

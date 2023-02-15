@@ -21,6 +21,12 @@ import net.minecraft.world.item.Item;
 public class CommonCircuitsTags {
 
     //#if MC>=11802
+    public static final TagKey<Item> COPPER_DUSTS = createItemTag(new ResourceLocation("c", "copper_dusts"));
+    //#else
+    //$$ public static final Tag<Item> COPPER_DUSTS = createItemTag(new ResourceLocation("c", "copper_dusts"));
+    //#endif
+
+    //#if MC>=11802
     public static TagKey<Item> createItemTag(ResourceLocation location) {
     //#else
     //$$ public static Tag<Item> createItemTag(ResourceLocation location) {

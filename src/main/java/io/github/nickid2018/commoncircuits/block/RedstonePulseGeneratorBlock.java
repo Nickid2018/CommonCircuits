@@ -1,6 +1,6 @@
 package io.github.nickid2018.commoncircuits.block;
 
-import io.github.nickid2018.commoncircuits.util.BlockTicksUtil;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -48,7 +48,7 @@ public class RedstonePulseGeneratorBlock extends Block {
     public void tick(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource randomSource) {
         blockState = blockState.cycle(POWERED);
         level.setBlockAndUpdate(blockPos, blockState);
-        BlockTicksUtil.scheduleTick(level, blockPos, blockState.getBlock(),
+        CompatUtil.scheduleTick(level, blockPos, blockState.getBlock(),
                 blockState.getValue(POWERED) == positivePulse ? 2 : blockState.getValue(INTERVAL));
     }
 
@@ -59,7 +59,7 @@ public class RedstonePulseGeneratorBlock extends Block {
 
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
-        BlockTicksUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(INTERVAL));
+        CompatUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(INTERVAL));
     }
 
     @Override

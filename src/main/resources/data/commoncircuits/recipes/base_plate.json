@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "commoncircuits:black_wax"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "C": {
+      "tag": "c:copper_dusts"
+    }
+  },
+  "pattern": [
+    "BCB",
+    "SSS"
+  ],
+  "result": {
+    "item": "commoncircuits:base_plate"
+  }
+}

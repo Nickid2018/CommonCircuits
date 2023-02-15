@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": {
+      "item": "commoncircuits:diode"
+    },
+    "W": {
+      "tag": "c:copper_dusts"
+    }
+  },
+  "pattern": [
+    "DW ",
+    "DWW"
+  ],
+  "result": {
+    "item": "commoncircuits:or_gate"
+  }
+}

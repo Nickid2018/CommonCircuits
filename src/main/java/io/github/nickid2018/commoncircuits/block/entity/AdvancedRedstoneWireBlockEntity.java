@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
 
-public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
+public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter {
 
     private int[] channels;
 
@@ -175,27 +175,12 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntity {
     }
 
     @Override
-    //#if MC>=11802
-    public void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
-    //#else
-    //$$ public CompoundTag save(CompoundTag compoundTag) {
-    //$$     super.save(compoundTag);
-    //#endif
-        compoundTag.putIntArray("channels", channels);
-        //#if MC<11802
-        //$$ return compoundTag;
-        //#endif
+    public void readParsed(CompoundTag compoundTag) {
+        channels = compoundTag.getIntArray("channels");
     }
 
     @Override
-    //#if MC>=11701
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
-    //#else
-    //$$ public void load(BlockState state, CompoundTag compoundTag) {
-    //$$     super.load(state, compoundTag);
-    //#endif
-        channels = compoundTag.getIntArray("channels");
+    public void writeParsed(CompoundTag compoundTag) {
+        compoundTag.putIntArray("channels", channels);
     }
 }

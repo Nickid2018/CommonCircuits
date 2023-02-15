@@ -1,6 +1,6 @@
 package io.github.nickid2018.commoncircuits.block;
 
-import io.github.nickid2018.commoncircuits.util.BlockTicksUtil;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -45,7 +45,7 @@ public class RedstoneClockBlock extends Block {
     public void tick(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource randomSource) {
         blockState = blockState.cycle(POWERED);
         level.setBlockAndUpdate(blockPos, blockState);
-        BlockTicksUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(HALF_PERIOD));
+        CompatUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(HALF_PERIOD));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RedstoneClockBlock extends Block {
 
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
-        BlockTicksUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(HALF_PERIOD));
+        CompatUtil.scheduleTick(level, blockPos, blockState.getBlock(), blockState.getValue(HALF_PERIOD));
     }
 
     @Override
