@@ -63,6 +63,10 @@ public class CommonCircuitsItems {
     public static final Item DIODE = item(new Item.Properties());
     public static final Item PMOS = item(new Item.Properties());
     public static final Item NMOS = item(new Item.Properties());
+    public static final Item NPN_BJT = item(new Item.Properties());
+    public static final Item PNP_BJT = item(new Item.Properties());
+    public static final Item N_JFET = item(new Item.Properties());
+    public static final Item P_JFET = item(new Item.Properties());
     public static final Item AND_GATE = item(new Item.Properties());
     public static final Item OR_GATE = item(new Item.Properties());
     public static final Item XOR_GATE = item(new Item.Properties());
@@ -134,6 +138,10 @@ public class CommonCircuitsItems {
         registerItem("diode", DIODE);
         registerItem("pmos", PMOS);
         registerItem("nmos", NMOS);
+        registerItem("npn_bjt", NPN_BJT);
+        registerItem("pnp_bjt", PNP_BJT);
+        registerItem("n_jfet", N_JFET);
+        registerItem("p_jfet", P_JFET);
         registerItem("and_gate", AND_GATE);
         registerItem("or_gate", OR_GATE);
         registerItem("xor_gate", XOR_GATE);

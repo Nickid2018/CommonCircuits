@@ -90,7 +90,7 @@ public class CommonCircuitsBlocks {
             createBlockEntity(AdvancedCircuitBlockEntity::new);
 
     public static final BlockEntityType<SemiconductorBenchBlockEntity> SEMICONDUCTOR_BENCH_BLOCK_ENTITY =
-            createBlockEntity(SemiconductorBenchBlockEntity::new);
+            createBlockEntity(SemiconductorBenchBlockEntity::new, SEMICONDUCTOR_BENCH);
 
 
     //#if MC>=11701

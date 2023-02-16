@@ -23,6 +23,10 @@
   "item.commoncircuits.diode": "Diode",
   "item.commoncircuits.pmos": "PMOS",
   "item.commoncircuits.nmos": "NMOS",
+  "item.commoncircuits.npn_bjt": "NPN-BJT",
+  "item.commoncircuits.pnp_bjt": "PNP-BJT",
+  "item.commoncircuits.n_jfet": "N-JFET",
+  "item.commoncircuits.p_jfet": "P-JFET",
   "item.commoncircuits.base_plate": "Base plate",
   "item.commoncircuits.and_gate": "AND gate",
   "item.commoncircuits.or_gate": "OR gate",
@@ -36,7 +40,11 @@
   "item.commoncircuits.advanced_redstone_wire_4": "Advanced redstone wire (4)",
   "item.commoncircuits.advanced_redstone_wire_8": "Advanced redstone wire (8)",
 
-  "container.commoncircuits.semiconductor_bench": "Semiconductor bench",
+  "gui.commoncircuits.semiconductor_bench": "Semiconductor bench",
+  "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
+  "gui.commoncircuits.semiconductor_bench.jfet": "JFET",
+  "gui.commoncircuits.semiconductor_bench.mosfet": "MOSFET",
+  "gui.commoncircuits.semiconductor_bench.diode": "Diode",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

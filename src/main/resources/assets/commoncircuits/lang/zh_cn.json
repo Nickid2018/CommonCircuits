@@ -23,6 +23,10 @@
   "item.commoncircuits.diode": "二极管",
   "item.commoncircuits.pmos": "PMOS",
   "item.commoncircuits.nmos": "NMOS",
+  "item.commoncircuits.npn_bjt": "NPN型BJT",
+  "item.commoncircuits.pnp_bjt": "PNP型BJT",
+  "item.commoncircuits.n_jfet": "N沟道JFET",
+  "item.commoncircuits.p_jfet": "P沟道JFET",
   "item.commoncircuits.base_plate": "基础版",
   "item.commoncircuits.and_gate": "与门",
   "item.commoncircuits.or_gate": "或门",
@@ -36,7 +40,11 @@
   "item.commoncircuits.advanced_redstone_wire_4": "高级红石线缆（4通道）",
   "item.commoncircuits.advanced_redstone_wire_8": "高级红石线缆（8通道）",
 
-  "container.commoncircuits.semiconductor_bench": "半导体装配台",
+  "gui.commoncircuits.semiconductor_bench": "半导体装配台",
+  "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
+  "gui.commoncircuits.semiconductor_bench.jfet": "JFET",
+  "gui.commoncircuits.semiconductor_bench.mosfet": "MOSFET",
+  "gui.commoncircuits.semiconductor_bench.diode": "二极管",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }

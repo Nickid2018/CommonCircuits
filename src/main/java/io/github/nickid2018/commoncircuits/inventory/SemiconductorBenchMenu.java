@@ -9,23 +9,27 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class SemiconductorBenchMenu extends AbstractContainerMenu {
 
     private final Container container;
+    private final ContainerData containerData;
 
     public SemiconductorBenchMenu(int syncId, Inventory playerInventory) {
-        this(syncId, playerInventory, new SimpleContainer(6));
+        this(syncId, playerInventory, new SimpleContainer(6), new SimpleContainerData(2));
     }
 
-    public SemiconductorBenchMenu(int syncId, Inventory inventory, Container container) {
+    public SemiconductorBenchMenu(int syncId, Inventory inventory, Container container, ContainerData containerData) {
         super(CommonCircuitsScreens.SEMICONDUCTOR_BENCH, syncId);
         checkContainerSize(container, 6);
+        checkContainerDataCount(containerData, 2);
         this.container = container;
+        this.containerData = containerData;
         container.startOpen(inventory.player);
         addSlot(new ConditionSlot(container, 0, 36, 23, itemStack -> CompatUtil.isSameItemTag(itemStack, CommonCircuitsTags.COPPER_DUSTS)));
         addSlot(new ConditionSlot(container, 1, 36, 51, itemStack -> CompatUtil.isSameItem(itemStack, CommonCircuitsItems.BLACK_WAX)));
@@ -38,6 +42,7 @@ public class SemiconductorBenchMenu extends AbstractContainerMenu {
                 addSlot(new Slot(inventory, j + i * 9 + 9, 36 + j * 18, 137 + i * 18));
         for (int i = 0; i < 9; i++)
             addSlot(new Slot(inventory, i, 36 + i * 18, 195));
+        addDataSlots(containerData);
     }
 
     @Override
@@ -46,7 +51,6 @@ public class SemiconductorBenchMenu extends AbstractContainerMenu {
         Slot slot = slots.get(invSlot);
         if (slot.hasItem()) {
             ItemStack originalStack = slot.getItem();
-            Item item = originalStack.getItem();
             newStack = originalStack.copy();
             if (invSlot < container.getContainerSize() && !moveItemStackTo(originalStack, container.getContainerSize(), slots.size(), true))
                 return ItemStack.EMPTY;
@@ -65,5 +69,22 @@ public class SemiconductorBenchMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return container.stillValid(player);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int buttonID) {
+        if (buttonID < 4) {
+            containerData.set(0, buttonID);
+            return true;
+        }
+        return false;
+    }
+
+    public int getMode() {
+        return containerData.get(0);
+    }
+
+    public int getBlazeLevel() {
+        return containerData.get(1);
     }
 }

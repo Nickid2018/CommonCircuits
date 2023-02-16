@@ -11,11 +11,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-//#if MC<11701
+//#if MC>=11701
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+//#else
 //$$ import net.minecraft.world.level.BlockGetter;
 //#endif
 
@@ -63,4 +66,14 @@ public class SemiconductorBenchBlock extends BaseEntityBlock {
             super.onRemove(blockState, level, blockPos, blockState2, bl);
         }
     }
+
+    //#if MC>=11701
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return level.isClientSide ?
+                null :
+                createTickerHelper(blockEntityType, CommonCircuitsBlocks.SEMICONDUCTOR_BENCH_BLOCK_ENTITY, SemiconductorBenchBlockEntity::serverTick);
+    }
+    //#endif
 }
