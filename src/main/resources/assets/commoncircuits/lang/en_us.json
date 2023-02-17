@@ -45,6 +45,20 @@
   "gui.commoncircuits.semiconductor_bench.jfet": "JFET",
   "gui.commoncircuits.semiconductor_bench.mosfet": "MOSFET",
   "gui.commoncircuits.semiconductor_bench.diode": "Diode",
+  "gui.commoncircuits.semiconductor_bench.diode.feature": "One-way communication",
+  "gui.commoncircuits.semiconductor_bench.diode.material": "1P+1N",
+  "gui.commoncircuits.semiconductor_bench.npn_bjt.feature": "Base high level conduction",
+  "gui.commoncircuits.semiconductor_bench.npn_bjt.material": "1P+2N",
+  "gui.commoncircuits.semiconductor_bench.pnp_bjt.feature": "Base low level conduction",
+  "gui.commoncircuits.semiconductor_bench.pnp_bjt.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.n_jfet.feature": "The higher the gate level, the lower the output",
+  "gui.commoncircuits.semiconductor_bench.n_jfet.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.p_jfet.feature": "The lower the gate level, the higher the output",
+  "gui.commoncircuits.semiconductor_bench.p_jfet.material": "1P+2N",
+  "gui.commoncircuits.semiconductor_bench.nmos.feature": "The higher the gate level, the higher the output",
+  "gui.commoncircuits.semiconductor_bench.nmos.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.pmos.feature": "The lower the gate level, the lower the output",
+  "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

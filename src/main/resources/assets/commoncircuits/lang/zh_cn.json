@@ -45,6 +45,20 @@
   "gui.commoncircuits.semiconductor_bench.jfet": "JFET",
   "gui.commoncircuits.semiconductor_bench.mosfet": "MOSFET",
   "gui.commoncircuits.semiconductor_bench.diode": "二极管",
+  "gui.commoncircuits.semiconductor_bench.diode.feature": "单向导通",
+  "gui.commoncircuits.semiconductor_bench.diode.material": "1P+1N",
+  "gui.commoncircuits.semiconductor_bench.npn_bjt.feature": "基极高电平导通",
+  "gui.commoncircuits.semiconductor_bench.npn_bjt.material": "1P+2N",
+  "gui.commoncircuits.semiconductor_bench.pnp_bjt.feature": "基极低电平导通",
+  "gui.commoncircuits.semiconductor_bench.pnp_bjt.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.n_jfet.feature": "栅极电平越高，输出越低",
+  "gui.commoncircuits.semiconductor_bench.n_jfet.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.p_jfet.feature": "栅极电平越低，输出越高",
+  "gui.commoncircuits.semiconductor_bench.p_jfet.material": "1P+2N",
+  "gui.commoncircuits.semiconductor_bench.nmos.feature": "栅极电平越高，输出越高",
+  "gui.commoncircuits.semiconductor_bench.nmos.material": "2P+1N",
+  "gui.commoncircuits.semiconductor_bench.pmos.feature": "栅极电平越低，输出越低",
+  "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }
