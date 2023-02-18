@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "commoncircuits:block/semiconductor_bench"
+    },
+    "facing=east": {
+      "model": "commoncircuits:block/semiconductor_bench",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "commoncircuits:block/semiconductor_bench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "commoncircuits:block/semiconductor_bench",
+      "y": 270
+    }
+  }
+}

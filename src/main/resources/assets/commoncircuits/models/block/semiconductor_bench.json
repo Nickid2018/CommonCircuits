@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "commoncircuits:block/semiconductor_bench_front",
+    "down": "commoncircuits:block/semiconductor_bench_bottom",
+    "up": "commoncircuits:block/semiconductor_bench_top",
+    "north": "commoncircuits:block/semiconductor_bench_front",
+    "south": "commoncircuits:block/semiconductor_bench_side",
+    "west": "commoncircuits:block/semiconductor_bench_side",
+    "east": "commoncircuits:block/semiconductor_bench_side"
+  }
+}

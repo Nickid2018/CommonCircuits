@@ -39,6 +39,7 @@
   "item.commoncircuits.advanced_redstone_wire_2": "高级红石线缆（2通道）",
   "item.commoncircuits.advanced_redstone_wire_4": "高级红石线缆（4通道）",
   "item.commoncircuits.advanced_redstone_wire_8": "高级红石线缆（8通道）",
+  "item.commoncircuits.semiconductor_bench": "半导体装配台",
 
   "gui.commoncircuits.semiconductor_bench": "半导体装配台",
   "gui.commoncircuits.semiconductor_bench.bjt": "BJT",

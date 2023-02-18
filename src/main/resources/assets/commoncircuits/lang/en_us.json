@@ -39,6 +39,7 @@
   "item.commoncircuits.advanced_redstone_wire_2": "Advanced redstone wire (2)",
   "item.commoncircuits.advanced_redstone_wire_4": "Advanced redstone wire (4)",
   "item.commoncircuits.advanced_redstone_wire_8": "Advanced redstone wire (8)",
+  "item.commoncircuits.semiconductor_bench": "Semiconductor bench",
 
   "gui.commoncircuits.semiconductor_bench": "Semiconductor bench",
   "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
