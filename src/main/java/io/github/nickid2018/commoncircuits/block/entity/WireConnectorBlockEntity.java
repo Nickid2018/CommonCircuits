@@ -2,17 +2,25 @@ package io.github.nickid2018.commoncircuits.block.entity;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.nickid2018.commoncircuits.block.CommonCircuitsBlocks;
+import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WireConnectorBlockEntity extends BlockEntityAdapter implements ChannelEnabled {
+public class WireConnectorBlockEntity extends BlockEntityAdapter implements ChannelEnabled, MenuProvider {
 
     private List<ConnectEntry> connections;
 
@@ -50,7 +58,18 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
         return 0;
     }
 
-    private static class ConnectEntry {
+    @Override
+    public Component getDisplayName() {
+        return CompatUtil.translated("item.commoncircuits.wire_connector");
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int syncID, Inventory inventory, Player player) {
+        return new WireConnectorMenu(syncID, inventory, connections);
+    }
+
+    public static class ConnectEntry {
         public List<Pair<Direction, Integer>> inputs;
         public List<Pair<Direction, Integer>> outputs;
         public int outputLevelNow;

@@ -139,6 +139,8 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
                 return wire.getChannelCount() == thisWire.getChannelCount();
             }
         }
+        if (state.is(CommonCircuitsBlocks.WIRE_CONNECTOR))
+            return true;
         if (state.is(Blocks.REDSTONE_WIRE))
             return false;
         return state.isSignalSource() || state.getBlock() instanceof AdvancedCircuitBlock;

@@ -72,7 +72,7 @@ public class SemiconductorBenchBlockEntity extends BlockEntityAdapter implements
 
     @Override
     public Component getDisplayName() {
-        return CompatUtil.translated("gui.commoncircuits.semiconductor_bench");
+        return CompatUtil.translated("item.commoncircuits.semiconductor_bench");
     }
 
     @Nullable

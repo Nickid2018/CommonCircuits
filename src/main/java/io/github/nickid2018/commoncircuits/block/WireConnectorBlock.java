@@ -14,6 +14,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+//#if MC<11701
+//$$ import net.minecraft.world.level.BlockGetter;
+//#endif
+
 public class WireConnectorBlock extends BaseEntityBlock {
 
     protected WireConnectorBlock(Properties properties) {

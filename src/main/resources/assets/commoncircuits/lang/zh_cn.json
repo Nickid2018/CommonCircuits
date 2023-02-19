@@ -40,8 +40,8 @@
   "item.commoncircuits.advanced_redstone_wire_4": "高级红石线缆（4通道）",
   "item.commoncircuits.advanced_redstone_wire_8": "高级红石线缆（8通道）",
   "item.commoncircuits.semiconductor_bench": "半导体装配台",
+  "item.commoncircuits.wire_connector": "集线器",
 
-  "gui.commoncircuits.semiconductor_bench": "半导体装配台",
   "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
   "gui.commoncircuits.semiconductor_bench.jfet": "JFET",
   "gui.commoncircuits.semiconductor_bench.mosfet": "MOSFET",

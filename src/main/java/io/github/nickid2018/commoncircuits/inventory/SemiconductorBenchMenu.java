@@ -1,6 +1,5 @@
 package io.github.nickid2018.commoncircuits.inventory;
 
-import io.github.nickid2018.commoncircuits.client.gui.CommonCircuitsScreens;
 import io.github.nickid2018.commoncircuits.item.CommonCircuitsItems;
 import io.github.nickid2018.commoncircuits.tags.CommonCircuitsTags;
 import io.github.nickid2018.commoncircuits.util.CompatUtil;
@@ -42,7 +41,7 @@ public class SemiconductorBenchMenu extends AbstractContainerMenu {
     }
 
     public SemiconductorBenchMenu(int syncId, Inventory inventory, Container container, ContainerData containerData) {
-        super(CommonCircuitsScreens.SEMICONDUCTOR_BENCH, syncId);
+        super(CommonCircuitsMenus.SEMICONDUCTOR_BENCH, syncId);
         checkContainerSize(container, 6);
         checkContainerDataCount(containerData, 2);
         this.container = container;
