@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,7 +35,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
     @Override
     public void readParsed(CompoundTag compoundTag) {
-        connections = compoundTag.getList("connections", Tag.TAG_COMPOUND).stream()
+        connections = compoundTag.getList("connections", 2).stream()
                 .map(CompoundTag.class::cast).map(ConnectEntry::fromNBT).collect(Collectors.toList());
     }
 
@@ -76,9 +75,9 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
         public static ConnectEntry fromNBT(CompoundTag tag) {
             ConnectEntry entry = new ConnectEntry();
-            entry.inputs = tag.getList("inputs", Tag.TAG_COMPOUND).stream()
+            entry.inputs = tag.getList("inputs", 2).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
-            entry.outputs = tag.getList("outputs", Tag.TAG_COMPOUND).stream()
+            entry.outputs = tag.getList("outputs", 2).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
             entry.outputLevelNow = tag.getInt("outputLevelNow");
             return entry;
