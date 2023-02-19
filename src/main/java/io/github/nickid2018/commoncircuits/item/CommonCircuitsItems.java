@@ -51,6 +51,7 @@ public class CommonCircuitsItems {
     public static final Item SILVER_ORE = itemNameBlockItem(CommonCircuitsBlocks.SILVER_ORE, new Item.Properties());
     public static final Item SILVER_BLOCK = itemNameBlockItem(CommonCircuitsBlocks.SILVER_BLOCK, new Item.Properties());
     public static final Item SEMICONDUCTOR_BENCH = itemNameBlockItem(CommonCircuitsBlocks.SEMICONDUCTOR_BENCH, new Item.Properties());
+    public static final Item WIRE_CONNECTOR = itemNameBlockItem(CommonCircuitsBlocks.WIRE_CONNECTOR, new Item.Properties());
 
     // Items -----------------------------------------------------------------------------------------------
     public static final Item COPPER_DUST = item(new Item.Properties());
@@ -127,6 +128,7 @@ public class CommonCircuitsItems {
         registerItem("silver_ore", SILVER_ORE);
         registerItem("silver_block", SILVER_BLOCK);
         registerItem("semiconductor_bench", SEMICONDUCTOR_BENCH);
+        registerItem("wire_connector", WIRE_CONNECTOR);
 
         registerItem("copper_dust", COPPER_DUST);
         registerItem("silver_dust", SILVER_DUST);

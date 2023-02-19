@@ -3,6 +3,7 @@ package io.github.nickid2018.commoncircuits.block;
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedCircuitBlockEntity;
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedRedstoneWireBlockEntity;
 import io.github.nickid2018.commoncircuits.block.entity.SemiconductorBenchBlockEntity;
+import io.github.nickid2018.commoncircuits.block.entity.WireConnectorBlockEntity;
 import io.github.nickid2018.commoncircuits.logic.LogicProvider;
 
 import net.minecraft.core.Registry;
@@ -72,6 +73,9 @@ public class CommonCircuitsBlocks {
     public static final SemiconductorBenchBlock SEMICONDUCTOR_BENCH =
             new SemiconductorBenchBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
                     .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
+    public static final WireConnectorBlock WIRE_CONNECTOR =
+            new WireConnectorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL)
+                    .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
 
     // -------------------------------------------------------------------------------------------------
     //#if MC>=11903
@@ -85,12 +89,12 @@ public class CommonCircuitsBlocks {
             createBlockEntity(AdvancedRedstoneWireBlockEntity::new,
                     ADVANCED_REDSTONE_WIRE_BLOCK_1, ADVANCED_REDSTONE_WIRE_BLOCK_2,
                     ADVANCED_REDSTONE_WIRE_BLOCK_4, ADVANCED_REDSTONE_WIRE_BLOCK_8);
-
     public static final BlockEntityType<AdvancedCircuitBlockEntity> ADVANCED_CIRCUIT_BLOCK_ENTITY =
             createBlockEntity(AdvancedCircuitBlockEntity::new);
-
     public static final BlockEntityType<SemiconductorBenchBlockEntity> SEMICONDUCTOR_BENCH_BLOCK_ENTITY =
             createBlockEntity(SemiconductorBenchBlockEntity::new, SEMICONDUCTOR_BENCH);
+    public static final BlockEntityType<WireConnectorBlockEntity> WIRE_CONNECTOR_BLOCK_ENTITY =
+            createBlockEntity(WireConnectorBlockEntity::new, WIRE_CONNECTOR);
 
 
     //#if MC>=11701
@@ -140,6 +144,7 @@ public class CommonCircuitsBlocks {
         registerBlock("silver_ore", SILVER_ORE);
         registerBlock("silver_block", SILVER_BLOCK);
         registerBlock("semiconductor_bench", SEMICONDUCTOR_BENCH);
+        registerBlock("wire_connector", WIRE_CONNECTOR);
 
         registerBlockEntity("advanced_redstone_wire", ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
         registerBlockEntity("advanced_circuit", ADVANCED_CIRCUIT_BLOCK_ENTITY);
