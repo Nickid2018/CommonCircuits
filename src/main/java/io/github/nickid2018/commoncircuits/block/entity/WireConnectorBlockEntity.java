@@ -4,11 +4,14 @@ import com.mojang.datafixers.util.Pair;
 import io.github.nickid2018.commoncircuits.block.CommonCircuitsBlocks;
 import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
 import io.github.nickid2018.commoncircuits.util.CompatUtil;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,12 +19,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WireConnectorBlockEntity extends BlockEntityAdapter implements ChannelEnabled, MenuProvider {
+public class WireConnectorBlockEntity extends BlockEntityAdapter implements ChannelEnabled, ExtendedScreenHandlerFactory, MenuProvider {
 
-    private List<ConnectEntry> connections;
+    private List<ConnectEntry> connections = new ArrayList<>();
 
     //#if MC>=11701
     public WireConnectorBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -32,6 +36,22 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     //$$     super(CommonCircuitsBlocks.WIRE_CONNECTOR_BLOCK_ENTITY);
     //$$ }
     //#endif
+
+    public static List<ConnectEntry> readConnections(FriendlyByteBuf buf) {
+        CompoundTag tag = buf.readNbt();
+        if (tag == null)
+            return null;
+        ListTag connectionsTag = tag.getList("connections", 2);
+        return connectionsTag.stream().map(CompoundTag.class::cast).map(ConnectEntry::fromNBT).collect(Collectors.toList());
+    }
+
+    public static CompoundTag writeConnections(List<ConnectEntry> dataAccess) {
+        CompoundTag tag = new CompoundTag();
+        ListTag connectionsTag = new ListTag();
+        dataAccess.stream().map(ConnectEntry::toNBT).forEach(connectionsTag::add);
+        tag.put("connections", connectionsTag);
+        return tag;
+    }
 
     @Override
     public void readParsed(CompoundTag compoundTag) {
@@ -65,7 +85,15 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int syncID, Inventory inventory, Player player) {
-        return new WireConnectorMenu(syncID, inventory, connections);
+        return new WireConnectorMenu(syncID, inventory, getBlockPos(), connections);
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
+        CompoundTag tag = new CompoundTag();
+        writeParsed(tag);
+        buf.writeBlockPos(getBlockPos());
+        buf.writeNbt(tag);
     }
 
     public static class ConnectEntry {

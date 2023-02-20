@@ -17,7 +17,6 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
         super(abstractContainerMenu, inventory, component);
         imageWidth = 230;
         imageHeight = 219;
-
     }
 
     @Override
@@ -39,5 +38,11 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
 
     @Override
     protected void renderLabels(PoseStack poseStack, int i, int j) {
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        menu.onClose();
     }
 }
