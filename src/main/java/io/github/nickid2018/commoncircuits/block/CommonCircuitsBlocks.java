@@ -149,5 +149,6 @@ public class CommonCircuitsBlocks {
         registerBlockEntity("advanced_redstone_wire", ADVANCED_REDSTONE_WIRE_BLOCK_ENTITY);
         registerBlockEntity("advanced_circuit", ADVANCED_CIRCUIT_BLOCK_ENTITY);
         registerBlockEntity("semiconductor_bench", SEMICONDUCTOR_BENCH_BLOCK_ENTITY);
+        registerBlockEntity("wire_connector", WIRE_CONNECTOR_BLOCK_ENTITY);
     }
 }

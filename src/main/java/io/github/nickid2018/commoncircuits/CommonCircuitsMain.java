@@ -5,6 +5,7 @@ import io.github.nickid2018.commoncircuits.levelgen.*;
 
 import io.github.nickid2018.commoncircuits.block.CommonCircuitsBlocks;
 import io.github.nickid2018.commoncircuits.item.CommonCircuitsItems;
+import io.github.nickid2018.commoncircuits.network.CommonCircuitsNetwork;
 import net.fabricmc.api.ModInitializer;
 
 public class CommonCircuitsMain implements ModInitializer {
@@ -14,6 +15,7 @@ public class CommonCircuitsMain implements ModInitializer {
         CommonCircuitsBlocks.registerBlocks();
         CommonCircuitsItems.registerItems();
         CommonCircuitsMenus.registerMenus();
+        CommonCircuitsNetwork.registerNetworkServer();
         //#if MC>=11802
         CommonCircuitsFeaturesV2.registerFeatures();
         //#elseif MC>=11701

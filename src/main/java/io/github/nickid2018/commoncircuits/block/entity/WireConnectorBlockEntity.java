@@ -11,11 +11,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,10 +42,12 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
     public static List<ConnectEntry> readConnections(FriendlyByteBuf buf) {
         CompoundTag tag = buf.readNbt();
-        if (tag == null)
-            return null;
-        ListTag connectionsTag = tag.getList("connections", 2);
-        return connectionsTag.stream().map(CompoundTag.class::cast).map(ConnectEntry::fromNBT).collect(Collectors.toList());
+        ListTag connectionsTag = tag.getList("connections", 10);
+        return connectionsTag.stream()
+                .map(CompoundTag.class::cast)
+                .map(ConnectEntry::fromNBT)
+                .filter(entry -> !entry.inputs.isEmpty() || !entry.outputs.isEmpty())
+                .collect(Collectors.toList());
     }
 
     public static CompoundTag writeConnections(List<ConnectEntry> dataAccess) {
@@ -55,8 +60,11 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
     @Override
     public void readParsed(CompoundTag compoundTag) {
-        connections = compoundTag.getList("connections", 2).stream()
-                .map(CompoundTag.class::cast).map(ConnectEntry::fromNBT).collect(Collectors.toList());
+        connections = compoundTag.getList("connections", 10).stream()
+                .map(CompoundTag.class::cast)
+                .map(ConnectEntry::fromNBT)
+                .filter(entry -> !entry.inputs.isEmpty() || !entry.outputs.isEmpty())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,7 +93,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int syncID, Inventory inventory, Player player) {
-        return new WireConnectorMenu(syncID, inventory, getBlockPos(), connections);
+        return new WireConnectorMenu(syncID, inventory);
     }
 
     @Override
@@ -96,6 +104,20 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
         buf.writeNbt(tag);
     }
 
+    public static void update(MinecraftServer server, Level level, FriendlyByteBuf buf) {
+        BlockPos pos = buf.readBlockPos();
+        List<ConnectEntry> entries = readConnections(buf);
+        server.execute(() -> {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof WireConnectorBlockEntity) {
+                WireConnectorBlockEntity wireConnectorBlockEntity = (WireConnectorBlockEntity) blockEntity;
+                wireConnectorBlockEntity.connections = entries;
+                entries.removeIf(entry -> entry.inputs.isEmpty() && entry.outputs.isEmpty());
+                wireConnectorBlockEntity.setChanged();
+            }
+        });
+    }
+
     public static class ConnectEntry {
         public List<Pair<Direction, Integer>> inputs;
         public List<Pair<Direction, Integer>> outputs;
@@ -103,9 +125,9 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
         public static ConnectEntry fromNBT(CompoundTag tag) {
             ConnectEntry entry = new ConnectEntry();
-            entry.inputs = tag.getList("inputs", 2).stream()
+            entry.inputs = tag.getList("inputs", 10).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
-            entry.outputs = tag.getList("outputs", 2).stream()
+            entry.outputs = tag.getList("outputs", 10).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
             entry.outputLevelNow = tag.getInt("outputLevelNow");
             return entry;
