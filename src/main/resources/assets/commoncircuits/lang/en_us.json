@@ -60,6 +60,8 @@
   "gui.commoncircuits.semiconductor_bench.nmos.material": "2P+1N",
   "gui.commoncircuits.semiconductor_bench.pmos.feature": "The lower the gate level, the lower the output",
   "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
+  "gui.commoncircuits.wire_connector.ok": "OK",
+  "gui.commoncircuits.wire_connector.cancel": "Cancel",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

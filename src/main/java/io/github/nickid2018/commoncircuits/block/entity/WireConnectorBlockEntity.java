@@ -42,7 +42,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
 
     public static List<ConnectEntry> readConnections(FriendlyByteBuf buf) {
         CompoundTag tag = buf.readNbt();
-        ListTag connectionsTag = tag.getList("connections", 10);
+        ListTag connectionsTag = tag.getList("c", 10);
         return connectionsTag.stream()
                 .map(CompoundTag.class::cast)
                 .map(ConnectEntry::fromNBT)
@@ -54,13 +54,13 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
         CompoundTag tag = new CompoundTag();
         ListTag connectionsTag = new ListTag();
         dataAccess.stream().map(ConnectEntry::toNBT).forEach(connectionsTag::add);
-        tag.put("connections", connectionsTag);
+        tag.put("c", connectionsTag);
         return tag;
     }
 
     @Override
     public void readParsed(CompoundTag compoundTag) {
-        connections = compoundTag.getList("connections", 10).stream()
+        connections = compoundTag.getList("c", 10).stream()
                 .map(CompoundTag.class::cast)
                 .map(ConnectEntry::fromNBT)
                 .filter(entry -> !entry.inputs.isEmpty() || !entry.outputs.isEmpty())
@@ -71,7 +71,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     public void writeParsed(CompoundTag compoundTag) {
         ListTag connectionsTag = new ListTag();
         connections.stream().map(ConnectEntry::toNBT).forEach(connectionsTag::add);
-        compoundTag.put("connections", connectionsTag);
+        compoundTag.put("c", connectionsTag);
     }
 
     @Override
@@ -123,13 +123,18 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
         public List<Pair<Direction, Integer>> outputs;
         public int outputLevelNow;
 
+        public ConnectEntry() {
+            inputs = new ArrayList<>();
+            outputs = new ArrayList<>();
+        }
+
         public static ConnectEntry fromNBT(CompoundTag tag) {
             ConnectEntry entry = new ConnectEntry();
-            entry.inputs = tag.getList("inputs", 10).stream()
+            entry.inputs = tag.getList("i", 10).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
-            entry.outputs = tag.getList("outputs", 10).stream()
+            entry.outputs = tag.getList("o", 10).stream()
                     .map(CompoundTag.class::cast).map(ConnectEntry::readPair).collect(Collectors.toList());
-            entry.outputLevelNow = tag.getInt("outputLevelNow");
+            entry.outputLevelNow = tag.getInt("oL");
             return entry;
         }
 
@@ -139,21 +144,21 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
             ListTag outputsTag = new ListTag();
             inputs.stream().map(ConnectEntry::writePair).forEach(inputsTag::add);
             outputs.stream().map(ConnectEntry::writePair).forEach(outputsTag::add);
-            tag.put("inputs", inputsTag);
-            tag.put("outputs", outputsTag);
-            tag.putInt("outputLevelNow", outputLevelNow);
+            tag.put("i", inputsTag);
+            tag.put("o", outputsTag);
+            tag.putInt("oL", outputLevelNow);
             return tag;
         }
 
         private static CompoundTag writePair(Pair<Direction, Integer> directionIntegerPair) {
             CompoundTag tag = new CompoundTag();
-            tag.putInt("direction", directionIntegerPair.getFirst().get3DDataValue());
-            tag.putInt("channel", directionIntegerPair.getSecond());
+            tag.putInt("d", directionIntegerPair.getFirst().get3DDataValue());
+            tag.putInt("c", directionIntegerPair.getSecond());
             return tag;
         }
 
         private static Pair<Direction, Integer> readPair(CompoundTag compoundTag) {
-            return new Pair<>(Direction.from3DDataValue(compoundTag.getInt("direction")), compoundTag.getInt("channel"));
+            return new Pair<>(Direction.from3DDataValue(compoundTag.getInt("d")), compoundTag.getInt("c"));
         }
     }
 }

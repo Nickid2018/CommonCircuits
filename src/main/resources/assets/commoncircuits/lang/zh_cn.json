@@ -60,6 +60,8 @@
   "gui.commoncircuits.semiconductor_bench.nmos.material": "2P+1N",
   "gui.commoncircuits.semiconductor_bench.pmos.feature": "栅极电平越低，输出越低",
   "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
+  "gui.commoncircuits.wire_connector.ok": "保存",
+  "gui.commoncircuits.wire_connector.cancel": "取消",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }

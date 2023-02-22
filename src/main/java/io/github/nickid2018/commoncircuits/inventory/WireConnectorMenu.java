@@ -111,34 +111,38 @@ public class WireConnectorMenu extends AbstractContainerMenu {
         return true;
     }
 
-    public void removeConnection(Direction direction, int index) {
+    public boolean removeConnection(Direction direction, int index) {
         DisplayChannelEntry entry = displayChannelEntries.get(direction)[index];
         if (entry.connectionIndex == -1)
-            return;
+            return false;
         WireConnectorBlockEntity.ConnectEntry connectEntry = dataAccess.get(entry.connectionIndex);
         connectEntry.inputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
         connectEntry.outputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
         entry.input = false;
         entry.output = false;
         entry.connectionIndex = -1;
+        return true;
     }
 
-    public void nextConnection(Direction direction, int index) {
+    public boolean nextConnection(Direction direction, int index) {
         DisplayChannelEntry entry = displayChannelEntries.get(direction)[index];
         if (entry.connectionIndex != -1) {
             WireConnectorBlockEntity.ConnectEntry connectEntry = dataAccess.get(entry.connectionIndex);
             connectEntry.inputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
             connectEntry.outputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
         }
+        if (dataAccess.isEmpty())
+            return false;
         entry.connectionIndex = (entry.connectionIndex + 1) % dataAccess.size();
         WireConnectorBlockEntity.ConnectEntry connectEntry = dataAccess.get(entry.connectionIndex);
         if (entry.input)
             connectEntry.inputs.add(Pair.of(direction, index));
         else if (entry.output)
             connectEntry.outputs.add(Pair.of(direction, index));
+        return true;
     }
 
-    public void createConnection(Direction direction, int index) {
+    public boolean createConnection(Direction direction, int index) {
         DisplayChannelEntry entry = displayChannelEntries.get(direction)[index];
         if (entry.connectionIndex != -1) {
             WireConnectorBlockEntity.ConnectEntry connectEntry = dataAccess.get(entry.connectionIndex);
@@ -152,6 +156,7 @@ public class WireConnectorMenu extends AbstractContainerMenu {
             connectEntry.inputs.add(Pair.of(direction, index));
         else if (entry.output)
             connectEntry.outputs.add(Pair.of(direction, index));
+        return true;
     }
 
     public static class DisplayChannelEntry {

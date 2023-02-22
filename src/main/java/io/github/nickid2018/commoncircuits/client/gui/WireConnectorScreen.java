@@ -3,6 +3,10 @@ package io.github.nickid2018.commoncircuits.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
+import io.github.nickid2018.commoncircuits.util.ClientCompatUtil;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Direction;
@@ -26,12 +30,71 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
     public static final int BUTTON_SWITCH_X = 205;
     public static final int BUTTON_SWITCH_Y = 4;
 
+    public static final Component LABEL_I = CompatUtil.literal("I");
+    public static final Component LABEL_O = CompatUtil.literal("O");
+    public static final Component LABEL_C = CompatUtil.literal("C");
+
+    public static final Component[] LABEL_NUMBER = new Component[]{
+            CompatUtil.literal("1"), CompatUtil.literal("2"), CompatUtil.literal("3"), CompatUtil.literal("4"),
+            CompatUtil.literal("5"), CompatUtil.literal("6"), CompatUtil.literal("7"), CompatUtil.literal("8")
+    };
+
+    public static final float[][] CONNECTION_COLOR_LIST = new float[][] {
+            {0.0F, 0.0F, 1.0F},
+            {0.0F, 1.0F, 0.0F},
+            {0.0F, 1.0F, 1.0F},
+            {1.0F, 0.0F, 0.0F},
+            {1.0F, 0.0F, 1.0F},
+            {1.0F, 1.0F, 0.0F},
+            {0.5F, 0.0F, 0.0F},
+            {0.0F, 0.5F, 0.0F},
+            {0.0F, 0.0F, 0.5F},
+            {0.5F, 0.5F, 0.5F},
+            {0.5F, 0.5F, 0.0F},
+            {0.5F, 0.0F, 0.5F},
+            {0.0F, 0.5F, 0.5F},
+            {0.5F, 0.5F, 1.0F},
+            {0.5F, 1.0F, 0.5F},
+            {1.0F, 0.5F, 0.5F},
+            {0.5F, 1.0F, 1.0F},
+            {1.0F, 0.5F, 1.0F},
+            {1.0F, 1.0F, 0.5F}
+    };
+
+    private int labelIx;
+    private int labelOx;
+    private int labelCx;
+
     private Direction nowDirection = Direction.DOWN;
 
     public WireConnectorScreen(WireConnectorMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
         imageWidth = 230;
         imageHeight = 219;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        labelIx = 46 - font.width("I") / 2;
+        labelOx = 70 - font.width("O") / 2;
+        labelCx = 95 - font.width("C") / 2;
+
+        Button ok = ClientCompatUtil.buildButton(leftPos + 118, topPos + 184, 40, 20,
+                CompatUtil.translated("gui.commoncircuits.wire_connector.ok"), button -> {
+                    menu.confirmAndClose();
+                    minecraft.setScreen(null);
+                });
+        Button cancel = ClientCompatUtil.buildButton(leftPos + 174, topPos + 184, 40, 20,
+                CompatUtil.translated("gui.commoncircuits.wire_connector.cancel"), button -> minecraft.setScreen(null));
+        //#if MC>=11701
+        addRenderableWidget(ok);
+        addRenderableWidget(cancel);
+        //#else
+        //$$ addButton(ok);
+        //$$ addButton(cancel);
+        //#endif
     }
 
     @Override
@@ -76,18 +139,33 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
             WireConnectorMenu.DisplayChannelEntry entry = entries[i];
             blit(poseStack, leftPos + 42, topPos + 52 + 20 * i, entry.input ? 230 : 238, 0, 8, 8);
             blit(poseStack, leftPos + 66, topPos + 52 + 20 * i, entry.output ? 230 : 238, 0, 8, 8);
+
+        }
+        for (int i = 0; i < entries.length; i++) {
+            WireConnectorMenu.DisplayChannelEntry entry = entries[i];
+
+            int connection = entry.connectionIndex;
+            if (connection == -1)
+                continue;
+            int colorIndex = connection % CONNECTION_COLOR_LIST.length;
+
+            //#if MC>=11701
+            RenderSystem.setShaderColor(CONNECTION_COLOR_LIST[colorIndex][0], CONNECTION_COLOR_LIST[colorIndex][1], CONNECTION_COLOR_LIST[colorIndex][2], 1.0F);
+            //#else
+            //$$ RenderSystem.color4f(CONNECTION_COLOR_LIST[colorIndex][0], CONNECTION_COLOR_LIST[colorIndex][1], CONNECTION_COLOR_LIST[colorIndex][2], 1.0F);
+            //#endif
+            blit(poseStack, leftPos + 91, topPos + 52 + 20 * i, 230, 44, 8, 8);
         }
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int i, int j) {
         font.draw(poseStack, title, titleLabelX, titleLabelY, 4210752);
-    }
-
-    @Override
-    public void onClose() {
-        super.onClose();
-        menu.confirmAndClose(); // Temporary
+        font.draw(poseStack, LABEL_I, labelIx, 35, 4210752);
+        font.draw(poseStack, LABEL_O, labelOx, 35, 4210752);
+        font.draw(poseStack, LABEL_C, labelCx, 35, 4210752);
+        for (int index = 0; index < 8; index++)
+            font.draw(poseStack, LABEL_NUMBER[index], 22, 52 + 20 * index, 4210752);
     }
 
     @Override
@@ -123,6 +201,20 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
             return menu.toggleInput(nowDirection, inputIndex);
         if (outputIndex != -1)
             return menu.toggleOutput(nowDirection, outputIndex);
+        int connectionIndex = -1;
+        for (int j = 0; j < 8; j++) {
+            if (parsedMouseX >= 91 && parsedMouseX <= 99 && parsedMouseY >= 52 + 20 * j && parsedMouseY <= 60 + 20 * j) {
+                connectionIndex = j;
+                break;
+            }
+        }
+        if (connectionIndex != -1) {
+            if (hasShiftDown())
+                return menu.removeConnection(nowDirection, connectionIndex);
+            if (hasControlDown())
+                return menu.createConnection(nowDirection, connectionIndex);
+            return menu.nextConnection(nowDirection, connectionIndex);
+        }
         return super.mouseClicked(mx, my, i);
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.tags.TagKey;
 //#endif
 //#if MC<11903
 //$$ import net.minecraft.network.chat.TranslatableComponent;
+//$$ import net.minecraft.network.chat.TextComponent;
 //#endif
 
 public class CompatUtil {
@@ -36,6 +37,14 @@ public class CompatUtil {
         return Component.translatable(key, args);
         //#else
         //$$ return new TranslatableComponent(key, args);
+        //#endif
+    }
+
+    public static Component literal(String text) {
+        //#if MC>=11903
+        return Component.literal(text);
+        //#else
+        //$$ return new TextComponent(text);
         //#endif
     }
 
