@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "commoncircuits:blocks/wire_connector"
+    "all": "commoncircuits:block/wire_connector"
   }
 }

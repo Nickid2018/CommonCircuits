@@ -6,7 +6,6 @@ import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
 import io.github.nickid2018.commoncircuits.util.ClientCompatUtil;
 import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Direction;
@@ -39,6 +38,17 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
             CompatUtil.literal("5"), CompatUtil.literal("6"), CompatUtil.literal("7"), CompatUtil.literal("8")
     };
 
+    public static final Component LABEL_CONNECTIONS = CompatUtil.translated("gui.commoncircuits.wire_connector.connections");
+
+    public static final Component[] LABEL_DIRECTIONS = new Component[] {
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.down"),
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.up"),
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.north"),
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.south"),
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.west"),
+            CompatUtil.translated("gui.commoncircuits.wire_connector.direction.east")
+    };
+
     public static final float[][] CONNECTION_COLOR_LIST = new float[][] {
             {0.0F, 0.0F, 1.0F},
             {0.0F, 1.0F, 0.0F},
@@ -64,6 +74,8 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
     private int labelIx;
     private int labelOx;
     private int labelCx;
+    private int labelConnectionsX;
+    private int labelDirectionX;
 
     private Direction nowDirection = Direction.DOWN;
 
@@ -80,6 +92,8 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
         labelIx = 46 - font.width("I") / 2;
         labelOx = 70 - font.width("O") / 2;
         labelCx = 95 - font.width("C") / 2;
+        labelConnectionsX = 166 - font.width(LABEL_CONNECTIONS) / 2;
+        labelDirectionX = imageWidth / 2 - font.width(LABEL_DIRECTIONS[0]) / 2;
 
         Button ok = ClientCompatUtil.buildButton(leftPos + 118, topPos + 184, 40, 20,
                 CompatUtil.translated("gui.commoncircuits.wire_connector.ok"), button -> {
@@ -161,9 +175,11 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
     @Override
     protected void renderLabels(PoseStack poseStack, int i, int j) {
         font.draw(poseStack, title, titleLabelX, titleLabelY, 4210752);
+        font.draw(poseStack, LABEL_DIRECTIONS[nowDirection.ordinal()], labelDirectionX, 16, 4210752);
         font.draw(poseStack, LABEL_I, labelIx, 35, 4210752);
         font.draw(poseStack, LABEL_O, labelOx, 35, 4210752);
         font.draw(poseStack, LABEL_C, labelCx, 35, 4210752);
+        font.draw(poseStack, LABEL_CONNECTIONS, labelConnectionsX, 35, 4210752);
         for (int index = 0; index < 8; index++)
             font.draw(poseStack, LABEL_NUMBER[index], 22, 52 + 20 * index, 4210752);
     }
@@ -176,12 +192,14 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
                 && parsedMouseY >= BUTTON_SWITCH_Y && parsedMouseY <= BUTTON_SWITCH_Y + BUTTON_SWITCH_HEIGHT) {
             if (nowDirection != Direction.DOWN) {
                 nowDirection = Direction.values()[nowDirection.ordinal() - 1];
+                labelDirectionX = imageWidth / 2 - font.width(LABEL_DIRECTIONS[nowDirection.ordinal()]) / 2;
                 return true;
             }
         } else if (parsedMouseX >= BUTTON_SWITCH_X + BUTTON_SWITCH_WIDTH && parsedMouseX <= BUTTON_SWITCH_X + 2 * BUTTON_SWITCH_WIDTH
                 && parsedMouseY >= BUTTON_SWITCH_Y && parsedMouseY <= BUTTON_SWITCH_Y + BUTTON_SWITCH_HEIGHT) {
             if (nowDirection != Direction.EAST) {
                 nowDirection = Direction.values()[nowDirection.ordinal() + 1];
+                labelDirectionX = imageWidth / 2 - font.width(LABEL_DIRECTIONS[nowDirection.ordinal()]) / 2;
                 return true;
             }
         }

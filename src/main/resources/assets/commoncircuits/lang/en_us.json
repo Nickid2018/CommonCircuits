@@ -62,6 +62,13 @@
   "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
   "gui.commoncircuits.wire_connector.ok": "OK",
   "gui.commoncircuits.wire_connector.cancel": "Cancel",
+  "gui.commoncircuits.wire_connector.connections": "Connections",
+  "gui.commoncircuits.wire_connector.direction.down": "Down",
+  "gui.commoncircuits.wire_connector.direction.up": "Up",
+  "gui.commoncircuits.wire_connector.direction.north": "North",
+  "gui.commoncircuits.wire_connector.direction.south": "South",
+  "gui.commoncircuits.wire_connector.direction.west": "West",
+  "gui.commoncircuits.wire_connector.direction.east": "East",
 
   "itemGroup.commoncircuits.commoncircuits": "Common Circuits"
 }

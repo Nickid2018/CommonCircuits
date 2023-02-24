@@ -104,7 +104,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
         buf.writeNbt(tag);
     }
 
-    public static void update(MinecraftServer server, Level level, FriendlyByteBuf buf) {
+    public static void updateConnectionsFromClient(MinecraftServer server, Level level, FriendlyByteBuf buf) {
         BlockPos pos = buf.readBlockPos();
         List<ConnectEntry> entries = readConnections(buf);
         server.execute(() -> {
@@ -116,6 +116,26 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
                 wireConnectorBlockEntity.setChanged();
             }
         });
+    }
+
+    public boolean update() {
+        boolean needUpdate = false;
+        for (ConnectEntry entry : connections) {
+            int l = 0;
+            for (Pair<Direction, Integer> pair : entry.inputs) {
+                BlockState state = level.getBlockState(getBlockPos().relative(pair.getFirst()));
+                BlockEntity blockEntity = level.getBlockEntity(getBlockPos().relative(pair.getFirst()));
+                if (blockEntity instanceof ChannelEnabled)
+                    l = Math.max(l, ((ChannelEnabled) blockEntity).getOutputSignalForChannel(pair.getFirst().getOpposite(), pair.getSecond()));
+                else
+                    l = Math.max(l, state.getSignal(level, getBlockPos().relative(pair.getFirst()), pair.getFirst().getOpposite()));
+            }
+            if (l != entry.outputLevelNow) {
+                needUpdate = true;
+                entry.outputLevelNow = l;
+            }
+        }
+        return needUpdate;
     }
 
     public static class ConnectEntry {

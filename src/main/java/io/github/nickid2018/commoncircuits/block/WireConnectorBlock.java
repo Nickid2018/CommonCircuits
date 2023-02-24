@@ -1,13 +1,17 @@
 package io.github.nickid2018.commoncircuits.block;
 
 import io.github.nickid2018.commoncircuits.block.entity.WireConnectorBlockEntity;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -49,5 +53,19 @@ public class WireConnectorBlock extends BaseEntityBlock {
                 player.openMenu(provider);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+        BlockEntity entity = level.getBlockEntity(blockPos);
+        if (entity instanceof WireConnectorBlockEntity) {
+            if (((WireConnectorBlockEntity) entity).update())
+                CompatUtil.scheduleTick(level, blockPos, blockState.getBlock(), 1);
+        }
+    }
+
+    @Override
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
+        serverLevel.updateNeighborsAt(blockPos, blockState.getBlock());
     }
 }

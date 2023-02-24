@@ -10,6 +10,6 @@ public class CommonCircuitsNetwork {
 
     public static void registerNetworkServer() {
         ServerPlayNetworking.registerGlobalReceiver(WIRE_CONNECTOR_UPDATE,
-                (server, player, handler, buf, responseSender) -> WireConnectorBlockEntity.update(server, player.level, buf));
+                (server, player, handler, buf, responseSender) -> WireConnectorBlockEntity.updateConnectionsFromClient(server, player.level, buf));
     }
 }

@@ -62,6 +62,13 @@
   "gui.commoncircuits.semiconductor_bench.pmos.material": "1P+2N",
   "gui.commoncircuits.wire_connector.ok": "保存",
   "gui.commoncircuits.wire_connector.cancel": "取消",
+  "gui.commoncircuits.wire_connector.connections": "连接",
+  "gui.commoncircuits.wire_connector.direction.down": "下面",
+  "gui.commoncircuits.wire_connector.direction.up": "上面",
+  "gui.commoncircuits.wire_connector.direction.north": "北面",
+  "gui.commoncircuits.wire_connector.direction.south": "南面",
+  "gui.commoncircuits.wire_connector.direction.west": "西面",
+  "gui.commoncircuits.wire_connector.direction.east": "东面",
 
   "itemGroup.commoncircuits.commoncircuits": "基础电路"
 }
