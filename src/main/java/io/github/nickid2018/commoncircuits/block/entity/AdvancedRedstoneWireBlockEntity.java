@@ -171,6 +171,11 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter implemen
         return getSignalRaw(channel);
     }
 
+    @Override
+    public int channelCount() {
+        return channels.length;
+    }
+
     public int getMaxSignalRaw() {
         int max = 0;
         for (int i : channels)

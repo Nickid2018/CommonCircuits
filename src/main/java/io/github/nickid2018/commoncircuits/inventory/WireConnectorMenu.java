@@ -90,6 +90,10 @@ public class WireConnectorMenu extends AbstractContainerMenu {
         connectEntry.inputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
         if (nowInput)
             connectEntry.inputs.add(Pair.of(direction, index));
+        if (nowInput && entry.output) {
+            entry.output = false;
+            connectEntry.outputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
+        }
         return true;
     }
 
@@ -102,6 +106,10 @@ public class WireConnectorMenu extends AbstractContainerMenu {
         connectEntry.outputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
         if (nowOutput)
             connectEntry.outputs.add(Pair.of(direction, index));
+        if (nowOutput && entry.input) {
+            entry.input = false;
+            connectEntry.inputs.removeIf(pair -> pair.getFirst() == direction && pair.getSecond() == index);
+        }
         return true;
     }
 

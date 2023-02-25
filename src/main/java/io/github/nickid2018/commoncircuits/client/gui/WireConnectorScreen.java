@@ -183,7 +183,7 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
 
         // Connection slots
         List<WireConnectorBlockEntity.ConnectEntry> connectEntries = menu.getDataAccess();
-        for (int i = Math.min(startIndex, connectEntries.size() - 1), j = 0; i < connectEntries.size() && j < 5; i++, j++) {
+        for (int i = Math.max(0, Math.min(startIndex, connectEntries.size() - 1)), j = 0; i < connectEntries.size() && j < 5; i++, j++) {
             int colorIndex = i % CONNECTION_COLOR_LIST.length;
             //#if MC>=11701
             RenderSystem.setShaderColor(CONNECTION_COLOR_LIST[colorIndex][0], CONNECTION_COLOR_LIST[colorIndex][1], CONNECTION_COLOR_LIST[colorIndex][2], 1.0F);
@@ -205,7 +205,7 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
         for (int index = 0; index < 8; index++)
             font.draw(poseStack, LABEL_NUMBER[index], 22, 52 + 20 * index, 4210752);
         List<WireConnectorBlockEntity.ConnectEntry> connectEntries = menu.getDataAccess();
-        for (int index = Math.min(startIndex, connectEntries.size() - 1), nowIndex = 0; index < connectEntries.size() && nowIndex < 5; index++, nowIndex++) {
+        for (int index = Math.max(0, Math.min(startIndex, connectEntries.size() - 1)), nowIndex = 0; index < connectEntries.size() && nowIndex < 5; index++, nowIndex++) {
             Component info = CompatUtil.literal(String.format("I: %d, O: %d",
                     connectEntries.get(index).inputs.size(), connectEntries.get(index).outputs.size()));
             font.draw(poseStack, info, 124, 58 + 22 * nowIndex, 4210752);

@@ -21,4 +21,9 @@ public class AdvancedCircuitBlockEntity extends BlockEntity implements ChannelEn
     public int getOutputSignalForChannel(Direction direction, int channel) {
         return 0;
     }
+
+    @Override
+    public int channelCount() {
+        return 0;
+    }
 }

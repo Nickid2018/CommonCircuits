@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Pair;
 import io.github.nickid2018.commoncircuits.block.CommonCircuitsBlocks;
 import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
 import io.github.nickid2018.commoncircuits.util.CompatUtil;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class WireConnectorBlockEntity extends BlockEntityAdapter implements ChannelEnabled, ExtendedScreenHandlerFactory, MenuProvider {
@@ -65,6 +69,8 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
                 .map(ConnectEntry::fromNBT)
                 .filter(entry -> !entry.inputs.isEmpty() || !entry.outputs.isEmpty())
                 .collect(Collectors.toList());
+        Set<Pair<Direction, Integer>> outputs = connections.stream().flatMap(entry -> entry.outputs.stream()).collect(Collectors.toSet());
+        connections.stream().map(entry -> entry.inputs).forEach(e -> e.removeIf(outputs::contains));
     }
 
     @Override
@@ -83,6 +89,11 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
             }
         }
         return 0;
+    }
+
+    @Override
+    public int channelCount() {
+        return 8;
     }
 
     @Override
@@ -119,7 +130,6 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     }
 
     public boolean update() {
-        // TODO
         boolean needUpdate = false;
         for (ConnectEntry entry : connections) {
             int l = 0;
