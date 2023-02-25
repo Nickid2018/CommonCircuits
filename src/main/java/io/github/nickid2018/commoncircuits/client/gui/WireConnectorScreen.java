@@ -2,6 +2,7 @@ package io.github.nickid2018.commoncircuits.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.nickid2018.commoncircuits.block.entity.WireConnectorBlockEntity;
 import io.github.nickid2018.commoncircuits.inventory.WireConnectorMenu;
 import io.github.nickid2018.commoncircuits.util.ClientCompatUtil;
 import io.github.nickid2018.commoncircuits.util.CompatUtil;
@@ -11,7 +12,11 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.StonecutterMenu;
+
+import java.util.List;
 
 public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMenu> {
 
@@ -78,6 +83,9 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
     private int labelDirectionX;
 
     private Direction nowDirection = Direction.DOWN;
+    private int startIndex = 0;
+    private boolean scrolling;
+    private float scrollOffs;
 
     public WireConnectorScreen(WireConnectorMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
@@ -147,13 +155,15 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
         blit(poseStack, leftPos + BUTTON_SWITCH_X + BUTTON_SWITCH_WIDTH, topPos + BUTTON_SWITCH_Y,
                 BUTTON_SWITCH_TEX[rightType][1][0], BUTTON_SWITCH_TEX[rightType][1][1], BUTTON_SWITCH_WIDTH, BUTTON_SWITCH_HEIGHT);
 
+        // Scroll bar
+        blit(poseStack, leftPos + 201, (int) (topPos + 52 + scrollOffs * 107), 230, isScrollBarActive() ? 52 : 67, 12, 15);
+
         // Link slots
         WireConnectorMenu.DisplayChannelEntry[] entries = menu.getDisplayChannelEntries().get(nowDirection);
         for (int i = 0; i < entries.length; i++) {
             WireConnectorMenu.DisplayChannelEntry entry = entries[i];
             blit(poseStack, leftPos + 42, topPos + 52 + 20 * i, entry.input ? 230 : 238, 0, 8, 8);
             blit(poseStack, leftPos + 66, topPos + 52 + 20 * i, entry.output ? 230 : 238, 0, 8, 8);
-
         }
         for (int i = 0; i < entries.length; i++) {
             WireConnectorMenu.DisplayChannelEntry entry = entries[i];
@@ -170,6 +180,18 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
             //#endif
             blit(poseStack, leftPos + 91, topPos + 52 + 20 * i, 230, 44, 8, 8);
         }
+
+        // Connection slots
+        List<WireConnectorBlockEntity.ConnectEntry> connectEntries = menu.getDataAccess();
+        for (int i = Math.min(startIndex, connectEntries.size() - 1), j = 0; i < connectEntries.size() && j < 5; i++, j++) {
+            int colorIndex = i % CONNECTION_COLOR_LIST.length;
+            //#if MC>=11701
+            RenderSystem.setShaderColor(CONNECTION_COLOR_LIST[colorIndex][0], CONNECTION_COLOR_LIST[colorIndex][1], CONNECTION_COLOR_LIST[colorIndex][2], 1.0F);
+            //#else
+            //$$ RenderSystem.color4f(CONNECTION_COLOR_LIST[colorIndex][0], CONNECTION_COLOR_LIST[colorIndex][1], CONNECTION_COLOR_LIST[colorIndex][2], 1.0F);
+            //#endif
+            blit(poseStack, leftPos + 119, topPos + 52 + 22 * j, 0, 219, 79, 22);
+        }
     }
 
     @Override
@@ -182,10 +204,17 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
         font.draw(poseStack, LABEL_CONNECTIONS, labelConnectionsX, 35, 4210752);
         for (int index = 0; index < 8; index++)
             font.draw(poseStack, LABEL_NUMBER[index], 22, 52 + 20 * index, 4210752);
+        List<WireConnectorBlockEntity.ConnectEntry> connectEntries = menu.getDataAccess();
+        for (int index = Math.min(startIndex, connectEntries.size() - 1), nowIndex = 0; index < connectEntries.size() && nowIndex < 5; index++, nowIndex++) {
+            Component info = CompatUtil.literal(String.format("I: %d, O: %d",
+                    connectEntries.get(index).inputs.size(), connectEntries.get(index).outputs.size()));
+            font.draw(poseStack, info, 124, 58 + 22 * nowIndex, 4210752);
+        }
     }
 
     @Override
     public boolean mouseClicked(double mx, double my, int i) {
+        scrolling = false;
         int parsedMouseX = (int) mx - leftPos;
         int parsedMouseY = (int) my - topPos;
         if (parsedMouseX >= BUTTON_SWITCH_X && parsedMouseX <= BUTTON_SWITCH_X + BUTTON_SWITCH_WIDTH
@@ -233,6 +262,38 @@ public class WireConnectorScreen extends AbstractContainerScreen<WireConnectorMe
                 return menu.createConnection(nowDirection, connectionIndex);
             return menu.nextConnection(nowDirection, connectionIndex);
         }
+        if (parsedMouseX >= 201 && parsedMouseX <= 212 && parsedMouseY >= 52 && parsedMouseY <= 174)
+            scrolling = true;
         return super.mouseClicked(mx, my, i);
+    }
+
+    public boolean mouseDragged(double d, double e, int i, double f, double g) {
+        if (scrolling && isScrollBarActive()) {
+            int j = topPos + 52;
+            int k = j + 122;
+            scrollOffs = ((float) e - (float) j - 7.5F) / ((float) (k - j) - 15.0F);
+            scrollOffs = Mth.clamp(scrollOffs, 0.0F, 1.0F);
+            startIndex = (int) (scrollOffs * getOffscreenRows() + 0.5);
+            return true;
+        }
+        return super.mouseDragged(d, e, i, f, g);
+    }
+
+    public boolean mouseScrolled(double d, double e, double f) {
+        if (isScrollBarActive()) {
+            int i = getOffscreenRows();
+            float g = (float)f / (float)i;
+            this.scrollOffs = Mth.clamp(scrollOffs - g, 0.0F, 1.0F);
+            this.startIndex = (int)(scrollOffs * i + 0.5);
+        }
+        return true;
+    }
+
+    private boolean isScrollBarActive() {
+        return menu.getDataAccess().size() > 5;
+    }
+
+    protected int getOffscreenRows() {
+        return menu.getDataAccess().size() - 5;
     }
 }

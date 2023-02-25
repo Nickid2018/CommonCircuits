@@ -119,6 +119,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
     }
 
     public boolean update() {
+        // TODO
         boolean needUpdate = false;
         for (ConnectEntry entry : connections) {
             int l = 0;

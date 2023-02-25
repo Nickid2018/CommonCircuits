@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
 
-public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter {
+public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter implements ChannelEnabled {
 
     private int[] channels;
 
@@ -76,7 +76,7 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter {
                     BlockState state = level.getBlockState(pos);
                     Block block = state.getBlock();
                     BlockEntity blockEntity = level.getBlockEntity(pos);
-                    if (blockEntity instanceof ChannelEnabled)
+                    if (blockEntity instanceof ChannelEnabled && !(block instanceof AdvancedRedstoneWireBlock))
                         maxSignal = Math.max(maxSignal, ((ChannelEnabled) blockEntity).getOutputSignalForChannel(direction.getOpposite(), channel));
                     else if (!(block instanceof AdvancedRedstoneWireBlock) && !state.is(Blocks.REDSTONE_WIRE)) {
                         int signal = level.getSignal(pos, direction);
@@ -164,6 +164,11 @@ public class AdvancedRedstoneWireBlockEntity extends BlockEntityAdapter {
 
     public int getSignalRaw(int channelNumber) {
         return channels[channelNumber];
+    }
+
+    @Override
+    public int getOutputSignalForChannel(Direction direction, int channel) {
+        return getSignalRaw(channel);
     }
 
     public int getMaxSignalRaw() {
