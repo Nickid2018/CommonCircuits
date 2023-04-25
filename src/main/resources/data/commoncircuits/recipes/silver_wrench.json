@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "S": {
+      "tag": "c:silver_ingots"
+    }
+  },
+  "pattern": [
+    "S S",
+    "SSS",
+    " S "
+  ],
+  "result": {
+    "item": "commoncircuits:silver_wrench"
+  }
+}

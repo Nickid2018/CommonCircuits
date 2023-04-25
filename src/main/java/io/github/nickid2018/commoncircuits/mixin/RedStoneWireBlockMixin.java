@@ -18,7 +18,7 @@ public class RedStoneWireBlockMixin {
 
     @Redirect(
             method = "updateIndirectNeighbourShapes",
-            //#if MC>=11903
+            //#if MC>=11904
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z")
             //#else
             //$$ at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z", ordinal = 0)

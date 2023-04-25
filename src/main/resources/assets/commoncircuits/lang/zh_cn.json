@@ -41,6 +41,7 @@
   "item.commoncircuits.advanced_redstone_wire_8": "高级红石线缆（8通道）",
   "item.commoncircuits.semiconductor_bench": "半导体装配台",
   "item.commoncircuits.wire_connector": "集线器",
+  "item.commoncircuits.silver_wrench": "银扳手",
 
   "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
   "gui.commoncircuits.semiconductor_bench.jfet": "JFET",

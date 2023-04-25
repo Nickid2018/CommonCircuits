@@ -13,7 +13,7 @@ import net.minecraft.tags.TagKey;
 //#else
 //$$ import net.minecraft.tags.Tag;
 //#endif
-//#if MC<11903
+//#if MC<11904
 //$$ import net.minecraft.network.chat.TranslatableComponent;
 //$$ import net.minecraft.network.chat.TextComponent;
 //#endif
@@ -33,7 +33,7 @@ public class CompatUtil {
     }
 
     public static Component translated(String key, Object... args) {
-        //#if MC>=11903
+        //#if MC>=11904
         return Component.translatable(key, args);
         //#else
         //$$ return new TranslatableComponent(key, args);
@@ -41,7 +41,7 @@ public class CompatUtil {
     }
 
     public static Component literal(String text) {
-        //#if MC>=11903
+        //#if MC>=11904
         return Component.literal(text);
         //#else
         //$$ return new TextComponent(text);

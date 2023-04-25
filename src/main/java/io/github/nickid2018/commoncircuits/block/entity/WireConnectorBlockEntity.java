@@ -125,6 +125,7 @@ public class WireConnectorBlockEntity extends BlockEntityAdapter implements Chan
                 wireConnectorBlockEntity.connections = entries;
                 entries.removeIf(entry -> entry.inputs.isEmpty() && entry.outputs.isEmpty());
                 wireConnectorBlockEntity.setChanged();
+                level.updateNeighborsAt(pos, wireConnectorBlockEntity.getBlockState().getBlock());
             }
         });
     }

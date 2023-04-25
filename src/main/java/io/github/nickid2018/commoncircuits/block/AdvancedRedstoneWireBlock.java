@@ -1,9 +1,14 @@
 package io.github.nickid2018.commoncircuits.block;
 
 import io.github.nickid2018.commoncircuits.block.entity.AdvancedRedstoneWireBlockEntity;
+import io.github.nickid2018.commoncircuits.item.CommonCircuitsItems;
+import io.github.nickid2018.commoncircuits.util.CompatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -16,6 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -180,5 +187,18 @@ public class AdvancedRedstoneWireBlock extends BaseEntityBlock {
             if (entity instanceof AdvancedRedstoneWireBlockEntity)
                 ((AdvancedRedstoneWireBlockEntity) entity).updateAllChannels();
         }
+    }
+
+    @Override
+    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (CompatUtil.isSameItem(itemStack, CommonCircuitsItems.SILVER_WRENCH)) {
+            Vec3 vec = blockHitResult.getLocation().subtract(blockPos.getX(), blockPos.getY(), blockPos.getZ()).subtract(0.5, 0.5, 0.5);
+            Direction direction = Direction.getNearest(vec.x, vec.y, vec.z);
+            BooleanProperty property = DIRECTIONS[direction.ordinal()];
+            level.setBlockAndUpdate(blockPos, blockState.setValue(property, !blockState.getValue(property)));
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else
+            return InteractionResult.PASS;
     }
 }

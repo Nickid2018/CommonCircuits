@@ -47,42 +47,42 @@ public class LogicProvider {
     }
 
     public static final LogicProvider AND = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 && input.applyAsInt(1) > 0 ? 15 : 0
     );
 
     public static final LogicProvider OR = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 || input.applyAsInt(1) > 0 ? 15 : 0
     );
 
     public static final LogicProvider NOT = new LogicProvider(
-            1, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            1, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 ? 0 : 15
     );
 
     public static final LogicProvider XOR = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 ^ input.applyAsInt(1) > 0 ? 15 : 0
     );
 
     public static final LogicProvider NAND = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 && input.applyAsInt(1) > 0 ? 0 : 15
     );
 
     public static final LogicProvider NOR = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 || input.applyAsInt(1) > 0 ? 0 : 15
     );
 
     public static final LogicProvider XNOR = new LogicProvider(
-            2, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            2, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             input -> input.applyAsInt(0) > 0 ^ input.applyAsInt(1) > 0 ? 0 : 15
     );
 
     public static final LogicProvider D_TRIGGER = new LogicProvider(
-            1, List.of(LogicType.BOOLEAN_REDSTONE_SIGNAL, LogicType.BOOLEAN_REDSTONE_SIGNAL), List.of(),
+            1, List.of(LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL, LogicType.REGULAR_BOOLEAN_REDSTONE_SIGNAL), List.of(),
             TriggerCondition.RISING_EDGE,
             input -> input.applyAsInt(0) > 0 ? 15 : 0,
             input -> input.applyAsInt(0) > 0 ? 0 : 15

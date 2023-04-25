@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
-//#if MC>=11903
+//#if MC>=11904
 import net.minecraft.core.registries.BuiltInRegistries;
 //#endif
 
@@ -78,7 +78,7 @@ public class CommonCircuitsBlocks {
                     .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
 
     // -------------------------------------------------------------------------------------------------
-    //#if MC>=11903
+    //#if MC>=11904
     public static final Block SILVER_ORE = new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
             .requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5));
     //#else
@@ -109,7 +109,7 @@ public class CommonCircuitsBlocks {
 
 
     private static void registerBlock(String name, Block block) {
-        //#if MC>=11903
+        //#if MC>=11904
         Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation("commoncircuits", name), block);
         //#else
         //$$ Registry.register(Registry.BLOCK, new ResourceLocation("commoncircuits", name), block);
@@ -117,7 +117,7 @@ public class CommonCircuitsBlocks {
     }
 
     private static void registerBlockEntity(String name, BlockEntityType<?> blockEntityType) {
-        //#if MC>=11903
+        //#if MC>=11904
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation("commoncircuits", name), blockEntityType);
         //#else
         //$$ Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("commoncircuits", name), blockEntityType);

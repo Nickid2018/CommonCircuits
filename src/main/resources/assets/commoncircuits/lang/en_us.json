@@ -41,6 +41,7 @@
   "item.commoncircuits.advanced_redstone_wire_8": "Advanced redstone wire (8)",
   "item.commoncircuits.semiconductor_bench": "Semiconductor bench",
   "item.commoncircuits.wire_connector": "Wire connector",
+  "item.commoncircuits.silver_wrench": "Silver wrench",
 
   "gui.commoncircuits.semiconductor_bench.bjt": "BJT",
   "gui.commoncircuits.semiconductor_bench.jfet": "JFET",

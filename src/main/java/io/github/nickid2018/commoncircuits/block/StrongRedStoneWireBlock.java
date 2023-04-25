@@ -185,7 +185,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
                 BlockState blockState2 = levelAccessor.getBlockState(mutableBlockPos);
                 if (blockState2.is(Blocks.REDSTONE_WIRE) || blockState2.getBlock() instanceof StrongRedStoneWireBlock) {
                     BlockPos blockPos2 = mutableBlockPos.relative(direction.getOpposite());
-                    //#if MC>=11903
+                    //#if MC>=11904
                     levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), mutableBlockPos, blockPos2, i, j);
                     //#else
                     //$$ BlockState blockState3 = blockState2.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos2), levelAccessor, mutableBlockPos, blockPos2);
@@ -196,7 +196,7 @@ public abstract class StrongRedStoneWireBlock extends Block {
                 BlockState blockState3 = levelAccessor.getBlockState(mutableBlockPos);
                 if (blockState3.is(Blocks.REDSTONE_WIRE) || blockState3.getBlock() instanceof StrongRedStoneWireBlock) {
                     BlockPos blockPos3 = mutableBlockPos.relative(direction.getOpposite());
-                    //#if MC>=11903
+                    //#if MC>=11904
                     levelAccessor.neighborShapeChanged(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), mutableBlockPos, blockPos3, i, j);
                     //#else
                     //$$ BlockState blockState5 = blockState3.updateShape(direction.getOpposite(), levelAccessor.getBlockState(blockPos3), levelAccessor, mutableBlockPos, blockPos3);

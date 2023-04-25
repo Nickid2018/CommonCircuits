@@ -1,6 +1,6 @@
 package io.github.nickid2018.commoncircuits.levelgen;
 
-//#if MC>=11903
+//#if MC>=11904
 import net.minecraft.core.registries.Registries;
 //#else
 //$$ import net.minecraft.core.Registry;
@@ -23,7 +23,7 @@ public class CommonCircuitsFeaturesV2 {
     public static final ResourceKey<PlacedFeature> ORE_SILVER_PLACED = placedFeature("ore_silver");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> configuredFeature(String name) {
-        //#if MC>=11903
+        //#if MC>=11904
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation("commoncircuits", name));
         //#else
         //$$ return ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, new ResourceLocation("commoncircuits", name));
@@ -31,7 +31,7 @@ public class CommonCircuitsFeaturesV2 {
     }
 
     public static ResourceKey<PlacedFeature> placedFeature(String name) {
-        //#if MC>=11903
+        //#if MC>=11904
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation("commoncircuits", name));
         //#else
         //$$ return ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, new ResourceLocation("commoncircuits", name));

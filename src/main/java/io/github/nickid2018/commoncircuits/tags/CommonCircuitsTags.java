@@ -1,6 +1,6 @@
 package io.github.nickid2018.commoncircuits.tags;
 
-//#if MC>=11903
+//#if MC>=11904
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
 //#elseif MC>=11802
@@ -31,7 +31,7 @@ public class CommonCircuitsTags {
     //#else
     //$$ public static Tag<Item> createItemTag(ResourceLocation location) {
     //#endif
-        //#if MC>=11903
+        //#if MC>=11904
         return TagKey.create(Registries.ITEM, location);
         //#elseif MC>=11802
         //$$ return TagKey.create(Registry.ITEM_REGISTRY, location);

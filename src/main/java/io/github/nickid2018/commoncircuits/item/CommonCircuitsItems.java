@@ -1,6 +1,6 @@
 package io.github.nickid2018.commoncircuits.item;
 
-//#if MC>=11903
+//#if MC>=11904
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CommonCircuitsItems {
 
-    //#if MC>=11903
+    //#if MC>=11904
     public static final CreativeModeTab COMMON_CIRCUITS = FabricItemGroup.builder(
             new ResourceLocation("commoncircuits", "commoncircuits")
     ).icon(() -> new ItemStack(CommonCircuitsBlocks.HIGH_POWER_REDSTONE_WIRE)).build();
@@ -77,8 +77,11 @@ public class CommonCircuitsItems {
     public static final Item XNOR_GATE = item(new Item.Properties());
     public static final Item BASE_PLATE = item(new Item.Properties());
 
+    public static final Item SILVER_WRENCH = item(new Item.Properties().stacksTo(1));
+
+    // Item Groups ----------------------------------------------------------------------------------------
     private static Item itemNameBlockItem(Block block, Item.Properties properties) {
-        //#if MC>=11903
+        //#if MC>=11904
         return new ItemNameBlockItem(block, properties);
         //#else
         //$$ return new ItemNameBlockItem(block, properties.tab(COMMON_CIRCUITS));
@@ -86,13 +89,22 @@ public class CommonCircuitsItems {
     }
 
     private static Item item(Item.Properties properties) {
-        //#if MC>=11903
+        //#if MC>=11904
         return new Item(properties);
         //#else
         //$$ return new Item(properties.tab(COMMON_CIRCUITS));
         //#endif
     }
 
+    private static Item.Properties tabProperties() {
+        //#if MC>=11904
+        return new Item.Properties();
+        //#else
+        //$$ return new Item.Properties().tab(COMMON_CIRCUITS);
+        //#endif
+    }
+
+    // Register Items -------------------------------------------------------------------------------------
     private static void registerItem(String name, Item item) {
         registerItem(new ResourceLocation("commoncircuits", name), item);
     }
@@ -100,7 +112,7 @@ public class CommonCircuitsItems {
     private static void registerItem(ResourceLocation resourceLocation, Item item) {
         if (item instanceof BlockItem)
             ((BlockItem) item).registerBlocks(Item.BY_BLOCK, item);
-        //#if MC>=11903
+        //#if MC>=11904
         Registry.register(BuiltInRegistries.ITEM, resourceLocation, item);
         //#else
         //$$ Registry.register(Registry.ITEM, resourceLocation, item);
@@ -153,7 +165,9 @@ public class CommonCircuitsItems {
         registerItem("xnor_gate", XNOR_GATE);
         registerItem("base_plate", BASE_PLATE);
 
-        //#if MC>=11903
+        registerItem("silver_wrench", SILVER_WRENCH);
+
+        //#if MC>=11904
         ItemGroupEvents.modifyEntriesEvent(COMMON_CIRCUITS).register(content -> COMMON_CIRCUITS_ITEMS.forEach(content::prepend));
         //#endif
     }
